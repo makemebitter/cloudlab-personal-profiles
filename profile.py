@@ -71,7 +71,7 @@ pc.defineParameter(
 pc.defineParameter(
     "tempFileSystemSize",
     "Temporary Filesystem Size",
-    portal.ParameterType.INTEGER, 0, advanced=True,
+    portal.ParameterType.INTEGER, 400, advanced=True,
     longDescription="""
     The size in GB of a temporary file system to mount on each of your nodes.
     Temporary means that they are deleted when your experiment is terminated.
@@ -149,7 +149,6 @@ def create_request(request, params, role, ip, worker_num=None):
             bs.size = "0GB"
         else:
             bs.size = "{}GB".format(params.tempFileSystemSize)
-        bs.placement = "local"
     iface = req.addInterface(
         'eth1', pg.IPv4Address(ip, '255.255.255.0'))
     return iface
