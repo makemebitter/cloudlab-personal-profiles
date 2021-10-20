@@ -13,9 +13,11 @@ echo "${PRIVATE_KEY}"
 source helper.sh
 add_global_vars
 install_apt
-
+save_space
+setup_project_user
 
 wait_workers
+
 
 
 

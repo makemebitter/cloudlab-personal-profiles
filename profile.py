@@ -125,7 +125,8 @@ def create_request(request, params, role, ip, worker_num=None):
     sudo chmod 777 -R /local /mnt;
     rsync -av /local/ /mnt/local/;
     sudo mount -o bind /mnt/local /local;
-    sudo bash /local/repository/bootstrap.sh\
+    cd /local/repository
+    sudo bash bootstrap.sh\
     '{role}'\
     '{params.jupyterPassword}'\
     '{proper_key}'\
