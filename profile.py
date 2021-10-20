@@ -150,8 +150,6 @@ def create_request(request, params, role, ip, worker_num=None):
         else:
             bs.size = "{}GB".format(params.tempFileSystemSize)
         bs.placement = "local"
-    bs.size = "{}GB".format(params.blockStoreSize)
-
     iface = req.addInterface(
         'eth1', pg.IPv4Address(ip, '255.255.255.0'))
     return iface
