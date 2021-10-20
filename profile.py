@@ -117,6 +117,9 @@ def create_request(request, params, role, ip, worker_num=None):
         req.routable_control_ip = params.publicIPSlaves
         if params.osNodeTypeSlave:
             req.hardware_type = params.osNodeTypeSlave
+    proper_key = '\n'.join(params.privateKey.split())
+    proper_key = '-----BEGIN RSA PRIVATE KEY-----\n' + \
+        proper_key + '\n-----END RSA PRIVATE KEY-----\n'
     req.disk_image = DISK_IMAGES[params.osNode]
     exec_string = """
     sudo chmod 777 -R /local /mnt;
