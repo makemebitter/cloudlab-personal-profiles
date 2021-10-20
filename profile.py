@@ -52,6 +52,7 @@ params = pc.bindParameters()
 def create_request(request, role, ip, worker_num=None):
     if role == 'm':
         name = 'master'
+        worker_num = 0
     elif role == 's':
         name = 'worker{}'.format(worker_num)
     req = request.RawPC(name)
@@ -68,7 +69,7 @@ def create_request(request, role, ip, worker_num=None):
         'bash',
         "sudo bash /local/repository/bootstrap.sh '{}' 2>&1 | sudo tee -a /local/logs/setup.log".format(
             role)))
-    bs = req.Blockstore("bs", "/mnt")
+    bs = req.Blockstore("bs_{}_{}".format(role, worker_num), "/mnt")
     bs.size = "{}GB".format(params.blockStoreSize)
     iface = req.addInterface(
         'eth1', pg.IPv4Address(ip, '255.255.255.0'))
