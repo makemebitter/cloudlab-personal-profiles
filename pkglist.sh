@@ -1,0 +1,13 @@
+apt-transport-https
+ca-certificates
+curl
+gnupg-agent
+software-properties-common
+sysstat
+openssh-server
+openssh-client
+syslinux-utils
+python3-pip
+socat
+libffi-dev
+htop

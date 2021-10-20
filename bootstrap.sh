@@ -9,6 +9,15 @@ GPADMIN_PASSWORD=${5}
 echo "PRIVATE KEY"
 echo "${PRIVATE_KEY}"
 
+source helper.sh
+add_global_vars
+install_apt
+
+
+wait_workers
+
+
+
 
 
 

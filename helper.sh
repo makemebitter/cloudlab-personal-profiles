@@ -1,9 +1,9 @@
-ADD_GLOBAL_VARS (){
-    
+add_global_vars (){
+    sudo cat constants.sh | sudo tee -a /etc/environment
     source /etc/environment
 }
 
-WAIT_WORKERS (){
+wait_workers (){
     # --------------------- Check if every host online -------------------------
     awk 'NR>1 {print $NF}' /etc/hosts | grep -v 'master' > $HOSTS_DIR
     if [ "$duty" = "m" ]; then
@@ -31,3 +31,9 @@ WAIT_WORKERS (){
     fi
     # --------------------------------------------------------------------------
 }
+
+install_apt (){
+    sudo apt-get update
+    sudo apt-get install -y $(cat pkglist)
+}
+

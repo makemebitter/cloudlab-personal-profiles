@@ -17,6 +17,8 @@ pc = portal.Context()
 
 pc.defineParameter("slaveCount", "Number of slave nodes",
                    portal.ParameterType.INTEGER, 1)
+pc.defineParameter("blockStoreSize", "Amount of block storage, in GBs",
+                   portal.ParameterType.INTEGER, 400)
 pc.defineParameter("osNodeTypeSlave", "Hardware Type for slaves",
                    portal.ParameterType.NODETYPE, "",
                    longDescription='''A specific hardware type to use for each
@@ -66,6 +68,8 @@ def create_request(request, role, ip, worker_num=None):
         'bash',
         "sudo bash /local/repository/bootstrap.sh '{}' 2>&1 | sudo tee -a /local/logs/setup.log".format(
             role)))
+    bs = req.Blockstore("bs", "/mnt")
+    bs.size = "{}GB".format(params.blockStoreSize)
     iface = req.addInterface(
         'eth1', pg.IPv4Address(ip, '255.255.255.0'))
     return iface
