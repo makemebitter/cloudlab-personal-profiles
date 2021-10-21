@@ -4,6 +4,7 @@ add_global_vars (){
     echo "WORKER_NAME=$worker_name" | sudo tee -a /etc/environment
     worker_number=$(sed -n -e 's/^.*worker//p' <<<"$worker_name")
     echo "WORKER_NUMBER=$worker_number" | sudo tee -a /etc/environment
+    echo "MNT_ROOT=$MNT_ROOT" | sudo tee -a /etc/environment
     source /etc/environment
 }
 
@@ -45,24 +46,24 @@ install_apt (){
 
 save_space (){
     sudo mkdir ${MNT_ROOT}/home
-    sudo rsync -av /home/ ${MNT_ROOT}/home/
+    sudo rsync -avr /home/ ${MNT_ROOT}/home/
     sudo rm -rvf /home/*
     sudo mount -o bind ${MNT_ROOT}/home/ /home/
 
     sudo mkdir ${MNT_ROOT}/tmp
-    sudo rsync -av /tmp/ ${MNT_ROOT}/tmp/
+    sudo rsync -avr /tmp/ ${MNT_ROOT}/tmp/
     sudo rm -rvf /tmp/*
     sudo mount -o bind ${MNT_ROOT}/tmp/ /tmp/
     sudo chmod 1777 /tmp
 
 
     sudo mkdir ${MNT_ROOT}/var.lib
-    sudo rsync -av /var/lib/ ${MNT_ROOT}/var.lib/
+    sudo rsync -avr /var/lib/ ${MNT_ROOT}/var.lib/
     sudo rm -rvf /var/lib/*
     sudo mount -o bind ${MNT_ROOT}/var.lib/ /var/lib/
 
     sudo mkdir ${MNT_ROOT}/var.cache
-    sudo rsync -av /var/cache/ ${MNT_ROOT}/var.cache/
+    sudo rsync -avr /var/cache/ ${MNT_ROOT}/var.cache/
     sudo rm -rvf /var/cache/*
     sudo mount -o bind ${MNT_ROOT}/var.cache/ /var/cache/
     sudo dpkg --configure -a
