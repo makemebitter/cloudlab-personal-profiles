@@ -2,10 +2,12 @@ jupyter
 jupyter_contrib_nbextensions
 jupyter_nbextensions_configurator
 yapf
-Pillow
+Pillow==7.1.1
 pandas
 matplotlib
 seaborn
 dill
 pylint
 python-language-server
+flake8
+autopep8
