@@ -114,11 +114,11 @@ def create_request(request, params, role, ip, worker_num=None):
         if params.osNodeTypeMaster:
             req.hardware_type = params.osNodeTypeMaster
     elif role == 's':
-        req.rou    proper_key = '-----BEGIN RSA PRIVATE KEY-----\n' + \
-table_control_ip = params.publicIPSlaves
+        req.routable_control_ip = params.publicIPSlaves
         if params.osNodeTypeSlave:
             req.hardware_type = params.osNodeTypeSlave
     proper_key = '\n'.join(params.privateKey.split())
+    proper_key = '-----BEGIN RSA PRIVATE KEY-----\n' + \
         proper_key + '\n-----END RSA PRIVATE KEY-----\n'
     req.disk_image = DISK_IMAGES[params.osNode]
     exec_string = """
