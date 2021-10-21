@@ -15,6 +15,7 @@ add_global_vars
 install_apt
 save_space
 setup_project_user
+generally_good_stuff
 
 wait_workers
 
@@ -25,12 +26,14 @@ wait_workers
 
 
 # -----------------------------------------------------------------------------
-# if [ "$duty" = "m" ]; then
-#   # Master bootstrap
-# fi
-# elif [ "$duty" = "s" ]; then
-#   # Slave bootstrap
-# fi
+if [ "$duty" = "m" ]; then
+  # Master bootstrap
+  sudo -H -u $PROJECT_USER master.sh
+fi
+elif [ "$duty" = "s" ]; then
+  # Slave bootstrap
+  sudo -H -u $PROJECT_USER worker.sh
+fi
 # -----------------------------------------------------------------------------
 
 echo "Bootstraping complete"

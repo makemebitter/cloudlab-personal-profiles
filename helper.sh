@@ -1,5 +1,9 @@
 add_global_vars (){
     sudo cat constants.sh | sudo tee -a /etc/environment
+    worker_name=$(cat /proc/sys/kernel/hostname | cut -d'.' -f1)
+    echo "WORKER_NAME=$worker_name" | sudo tee -a /etc/environment
+    worker_number=$(sed -n -e 's/^.*worker//p' <<<"$worker_name")
+    echo "WORKER_NUMBER=$worker_number" | sudo tee -a /etc/environment
     source /etc/environment
 }
 
@@ -33,6 +37,8 @@ wait_workers (){
 }
 
 install_apt (){
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
     sudo apt-get update
     sudo apt-get install -y $(cat pkglist)
 }
@@ -69,8 +75,21 @@ setup_project_user (){
     sudo chown $PROJECT_USER -R  /local /$MNT_ROOT
     echo "${PRIVATE_KEY}" > $SSH_KEY_FILE
     sudo chown $PROJECT_USER $SSH_KEY_FILE
-    sudo chmod 600 $SSH_KEY_FILE
+    sudo -H -u $PROJECT_USER mkdir -m 700 /home/$PROJECT_USER/.ssh
+    sudo -H -u $PROJECT_USER touch /home/$PROJECT_USER/.ssh/authorized_keys
+    sudo -H -u $PROJECT_USER cp $SSH_KEY_FILE /home/$PROJECT_USER/.ssh/prj_key
+    sudo chmod 600 /home/$PROJECT_USER/.ssh/authorized_keys
+    sudo chmod 600 /home/$PROJECT_USER/.ssh/prj_key
     ssh-keygen -y -f $SSH_KEY_FILE | sudo tee -a /home/$PROJECT_USER/.ssh/authorized_keys
+    cp .screenrc /home/$PROJECT_USER
+    cat bashrc | sudo tee -a /home/$PROJECT_USER/.bashrc
+}
+
+generally_good_stuff (){
+    echo "RemoveIPC=no" | sudo tee -a /etc/systemd/logind.conf
+    sudo service systemd-logind restart
+    echo -e "$PROJECT_USER hard core unlimited\n$PROJECT_USER hard nproc 131072\n$PROJECT_USER hard nofile 65536" | sudo tee -a /etc/security/limits.d/$PROJECT_USER-limits.conf
+    sudo -H -u $PROJECT_USER bash -c 'ssh-keygen -F github.com || ssh-keyscan github.com >>~/.ssh/known_hosts'
 
 }
 

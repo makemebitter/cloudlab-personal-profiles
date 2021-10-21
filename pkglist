@@ -1,3 +1,4 @@
+build-essential
 apt-transport-https
 ca-certificates
 curl
@@ -8,6 +9,13 @@ openssh-server
 openssh-client
 syslinux-utils
 python3-pip
+python3-dev
 socat
 libffi-dev
 htop
+nfs-kernel-server
+nfs-common
+libx11-dev
+libxkbfile-dev
+libsecret-1-dev
+yarn
