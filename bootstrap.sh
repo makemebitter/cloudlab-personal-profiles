@@ -12,8 +12,8 @@ echo "${PRIVATE_KEY}"
 
 source helper.sh
 add_global_vars
-install_apt
 save_space
+install_apt
 setup_project_user
 generally_good_stuff
 
@@ -24,7 +24,6 @@ wait_workers
 
 
 
-sudo -H -u $PROJECT_USER bash common.sh
 # -----------------------------------------------------------------------------
 if [ "$duty" = "m" ]; then
   # Master bootstrap

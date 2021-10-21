@@ -73,7 +73,7 @@ save_space (){
     # sudo rm -rvf /var/cache/*
     # sudo mount -o bind ${MNT_ROOT}/var.cache/ /var/cache/
 
-    sudo dpkg --configure -a
+    # sudo dpkg --configure -a
 }
 
 setup_project_user (){
@@ -120,14 +120,14 @@ install_cuda (){
     sudo apt-get update
 
     # Install development and runtime libraries (~4GB)
-    sudo apt-get install -y --no-install-recommends --allow-downgrades \
+    sudo apt-get install -y --no-install-recommends \
         cuda-11-0 \
-        libcudnn8=8.0.4.30-1+cuda11.0  \
-        libcudnn8-dev=8.0.4.30-1+cuda11.0
+        libcudnn8=8.2.4.15-1+cuda11.0  \
+        libcudnn8-dev=8.2.4.15-1+cuda11.0
 
 }
 
 install_python_dep (){
-    
+    echo No
 }
 
