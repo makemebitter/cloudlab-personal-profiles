@@ -1,4 +1,5 @@
 set -e
+mkdir $NFS_DIR
 echo "$NFS_DIR  *(rw,sync,crossmnt,no_root_squash,crossmnt)" | sudo tee -a  /etc/exports
 sudo /etc/init.d/nfs-kernel-server restart
 # python
