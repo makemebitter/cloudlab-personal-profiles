@@ -24,7 +24,7 @@ wait_workers
 
 
 
-
+sudo -H -u $PROJECT_USER bash common.sh
 # -----------------------------------------------------------------------------
 if [ "$duty" = "m" ]; then
   # Master bootstrap

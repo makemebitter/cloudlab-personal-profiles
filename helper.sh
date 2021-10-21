@@ -57,10 +57,15 @@ save_space (){
     sudo chmod 1777 /tmp
 
 
-    sudo mkdir ${MNT_ROOT}/var.lib
-    sudo rsync -avr /var/lib/ ${MNT_ROOT}/var.lib/
-    sudo rm -rvf /var/lib/*
-    sudo mount -o bind ${MNT_ROOT}/var.lib/ /var/lib/
+    sudo mkdir ${MNT_ROOT}/var
+    sudo rsync -avr /var/ ${MNT_ROOT}/var/
+    sudo rm -rvf /var/*
+    sudo mount -o bind ${MNT_ROOT}/var/ /var/
+
+    # sudo mkdir ${MNT_ROOT}/var.lib
+    # sudo rsync -avr /var/lib/ ${MNT_ROOT}/var.lib/
+    # sudo rm -rvf /var/lib/*
+    # sudo mount -o bind ${MNT_ROOT}/var.lib/ /var/lib/
 
     # don't use
     # sudo mkdir ${MNT_ROOT}/var.cache
@@ -94,5 +99,35 @@ generally_good_stuff (){
     echo -e "$PROJECT_USER hard core unlimited\n$PROJECT_USER hard nproc 131072\n$PROJECT_USER hard nofile 65536" | sudo tee -a /etc/security/limits.d/$PROJECT_USER-limits.conf
     sudo -H -u $PROJECT_USER bash -c 'ssh-keygen -F github.com || ssh-keyscan github.com >>~/.ssh/known_hosts'
 
+}
+
+install_cuda (){
+    # Add NVIDIA package repositories
+    cd /local
+    wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-ubuntu1804.pin
+    sudo mv cuda-ubuntu1804.pin /etc/apt/preferences.d/cuda-repository-pin-600
+    sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub
+    sudo add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/ /"
+    sudo apt-get update
+
+    wget http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb
+
+    sudo apt-get install -y ./nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb
+    sudo apt-get update
+
+    wget https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/libnvinfer7_7.1.3-1+cuda11.0_amd64.deb
+    sudo apt-get install -y ./libnvinfer7_7.1.3-1+cuda11.0_amd64.deb
+    sudo apt-get update
+
+    # Install development and runtime libraries (~4GB)
+    sudo apt-get install -y --no-install-recommends --allow-downgrades \
+        cuda-11-0 \
+        libcudnn8=8.0.4.30-1+cuda11.0  \
+        libcudnn8-dev=8.0.4.30-1+cuda11.0
+
+}
+
+install_python_dep (){
+    
 }
 
