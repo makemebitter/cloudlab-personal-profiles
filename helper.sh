@@ -62,10 +62,12 @@ save_space (){
     sudo rm -rvf /var/lib/*
     sudo mount -o bind ${MNT_ROOT}/var.lib/ /var/lib/
 
-    sudo mkdir ${MNT_ROOT}/var.cache
-    sudo rsync -avr /var/cache/ ${MNT_ROOT}/var.cache/
-    sudo rm -rvf /var/cache/*
-    sudo mount -o bind ${MNT_ROOT}/var.cache/ /var/cache/
+    # don't use
+    # sudo mkdir ${MNT_ROOT}/var.cache
+    # sudo rsync -avr /var/cache/ ${MNT_ROOT}/var.cache/
+    # sudo rm -rvf /var/cache/*
+    # sudo mount -o bind ${MNT_ROOT}/var.cache/ /var/cache/
+
     sudo dpkg --configure -a
 }
 
