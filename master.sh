@@ -5,6 +5,7 @@ sudo /etc/init.d/nfs-kernel-server restart
 # python
 sudo python3 -m pip install -r requirements_master.txt
 # Jupyter extension configs
+mkdir -p ~/.jupyter;
 sudo python3 -m jupyter contrib nbextension install --system ;
 sudo python3 -m jupyter nbextensions_configurator enable --system ;
 sudo python3 -m jupyter nbextension enable code_prettify/code_prettify --system ;
@@ -29,9 +30,9 @@ yarn --cache-folder ./ycache && rm -rf ./ycache && \
 yarn theia download:plugins
 
 
-# run 
-screen -dmS bg bash -c "nohup jupyter notebook --no-browser --ip 0.0.0.0 --notebook-dir=/ > /local/logs/jupyter.log 2>&1 \
-& nohup yarn theia start / --hostname=127.0.0.1 > /local/logs/theia.log 2>&1 &"
+# # run 
+# screen -dmS bg bash -c "nohup jupyter notebook --no-browser --ip 0.0.0.0 --notebook-dir=/ > /local/logs/jupyter.log 2>&1 \
+# & nohup yarn theia start / --hostname=127.0.0.1 > /local/logs/theia.log 2>&1 &"
 
 
 
