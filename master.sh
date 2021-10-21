@@ -13,7 +13,7 @@ sudo python3 -m jupyter nbextension enable spellchecker/main --system ;
 HASHED_PASSWORD=$(python3.7 -c "from notebook.auth import passwd; print(passwd('$JUPYTER_PASSWORD'))");
 echo "c.NotebookApp.password = u'$HASHED_PASSWORD'" >~/.jupyter/jupyter_notebook_config.py;
 echo "c.NotebookApp.open_browser = False" >>~/.jupyter/jupyter_notebook_config.py;
-# nohup jupyter notebook --no-browser --ip 0.0.0.0 --notebook-dir=/ > /local/logs/jupyter.log 2>&1 &
+
 
 # Theia
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash

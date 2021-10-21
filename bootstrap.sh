@@ -28,11 +28,11 @@ wait_workers
 # -----------------------------------------------------------------------------
 if [ "$duty" = "m" ]; then
   # Master bootstrap
-  sudo -H -u $PROJECT_USER master.sh
+  sudo -H -u $PROJECT_USER bash master.sh
 fi
 elif [ "$duty" = "s" ]; then
   # Slave bootstrap
-  sudo -H -u $PROJECT_USER worker.sh
+  sudo -H -u $PROJECT_USER bash worker.sh
 fi
 # -----------------------------------------------------------------------------
 
