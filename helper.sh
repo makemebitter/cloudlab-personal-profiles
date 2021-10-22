@@ -73,7 +73,7 @@ save_space (){
     # sudo rm -rvf /var/cache/*
     # sudo mount -o bind ${MNT_ROOT}/var.cache/ /var/cache/
 
-    # sudo dpkg --configure -a
+    sudo dpkg --configure -a
 }
 
 setup_project_user (){
