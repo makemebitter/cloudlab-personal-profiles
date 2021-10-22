@@ -44,23 +44,40 @@ install_apt (){
     sudo apt-get install -y $(cat pkglist)
 }
 
-save_space (){
-    sudo mkdir ${MNT_ROOT}/home
-    sudo rsync -avr /home/ ${MNT_ROOT}/home/
-    sudo rm -rvf /home/*
-    sudo mount -o bind ${MNT_ROOT}/home/ /home/
+space_saver (){
+    ori_dir=$1
+    new_dir=$2
+    sudo mkdir ${MNT_ROOT}/$new_dir
+    sudo rsync -avr $ori_dir/ ${MNT_ROOT}/$new_dir/
+    sudo rm -rvf $ori_dir/*
+    sudo mount -o bind ${MNT_ROOT}/$new_dir/ $ori_dir/
+    echo "${MNT_ROOT}/$new_dir/    $ori_dir/    none    bind    0    0" | sudo tee -a /etc/fstab
 
-    sudo mkdir ${MNT_ROOT}/tmp
-    sudo rsync -avr /tmp/ ${MNT_ROOT}/tmp/
-    sudo rm -rvf /tmp/*
-    sudo mount -o bind ${MNT_ROOT}/tmp/ /tmp/
+}
+
+save_space (){
+    # sudo mkdir ${MNT_ROOT}/home
+    # sudo rsync -avr /home/ ${MNT_ROOT}/home/
+    # sudo rm -rvf /home/*
+    # sudo mount -o bind ${MNT_ROOT}/home/ /home/
+
+    space_saver "/home" "home"
+
+    # sudo mkdir ${MNT_ROOT}/tmp
+    # sudo rsync -avr /tmp/ ${MNT_ROOT}/tmp/
+    # sudo rm -rvf /tmp/*
+    # sudo mount -o bind ${MNT_ROOT}/tmp/ /tmp/
+
+    space_saver "/tmp" "tmp"
     sudo chmod 1777 /tmp
 
 
-    sudo mkdir ${MNT_ROOT}/var
-    sudo rsync -avr /var/ ${MNT_ROOT}/var/
-    sudo rm -rvf /var/*
-    sudo mount -o bind ${MNT_ROOT}/var/ /var/
+    # sudo mkdir ${MNT_ROOT}/var
+    # sudo rsync -avr /var/ ${MNT_ROOT}/var/
+    # sudo rm -rvf /var/*
+    # sudo mount -o bind ${MNT_ROOT}/var/ /var/
+
+    space_saver "/var" "var"
 
     # sudo mkdir ${MNT_ROOT}/var.lib
     # sudo rsync -avr /var/lib/ ${MNT_ROOT}/var.lib/
