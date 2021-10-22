@@ -125,15 +125,15 @@ def create_request(request, params, role, ip, worker_num=None):
     sudo chmod 777 -R /local /mnt;
     rsync -av /local/ /mnt/local/;
     sudo mount -o bind /mnt/local /local;
-    cd /local/repository
-    echo "/mnt/local    /local    none    bind    0    0" | sudo tee -a /etc/fstab
-    sudo bash bootstrap.sh\
-    '{role}'\
-    '{params.jupyterPassword}'\
-    '{proper_key}'\
-    '{params.GPUWorkers}'\
-    '{params.gpadminPassword}'\
-    '{params.tempFileSystemMount}'\
+    cd /local/repository;
+    echo "/mnt/local    /local    none    bind    0    0" | sudo tee -a /etc/fstab;
+    sudo bash bootstrap.sh \
+    '{role}' \
+    '{params.jupyterPassword}' \
+    '{proper_key}' \
+    '{params.GPUWorkers}' \
+    '{params.gpadminPassword}' \
+    '{params.tempFileSystemMount}' \
     2>&1 | sudo tee -a /local/logs/setup.log
     """.format(**locals())
 
