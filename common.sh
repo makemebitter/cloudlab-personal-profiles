@@ -2,16 +2,16 @@ set -e
 source helper.sh
 
 # python
-sudo python3 -m pip install -r requirements_master.txt
+sudo -H python3 -m pip install -r requirements_master.txt
 # Jupyter extension configs
 mkdir -p ~/.jupyter;
-sudo python3 -m jupyter contrib nbextension install --system ;
-sudo python3 -m jupyter nbextensions_configurator enable --system ;
-sudo python3 -m jupyter nbextension enable code_prettify/code_prettify --system ;
-sudo python3 -m jupyter nbextension enable execute_time/ExecuteTime --system ;
-sudo python3 -m jupyter nbextension enable collapsible_headings/main --system ;
-sudo python3 -m jupyter nbextension enable freeze/main --system ;
-sudo python3 -m jupyter nbextension enable spellchecker/main --system ;
+sudo -H python3 -m jupyter contrib nbextension install --system ;
+sudo -H python3 -m jupyter nbextensions_configurator enable --system ;
+sudo -H python3 -m jupyter nbextension enable code_prettify/code_prettify --system ;
+sudo -H python3 -m jupyter nbextension enable execute_time/ExecuteTime --system ;
+sudo -H python3 -m jupyter nbextension enable collapsible_headings/main --system ;
+sudo -H python3 -m jupyter nbextension enable freeze/main --system ;
+sudo -H python3 -m jupyter nbextension enable spellchecker/main --system ;
 HASHED_PASSWORD=$(python3 -c "from notebook.auth import passwd; print(passwd('$JUPYTER_PASSWORD'))");
 echo "c.NotebookApp.password = u'$HASHED_PASSWORD'" >~/.jupyter/jupyter_notebook_config.py;
 echo "c.NotebookApp.open_browser = False" >>~/.jupyter/jupyter_notebook_config.py;
@@ -31,5 +31,8 @@ yarn --cache-folder ./ycache && rm -rf ./ycache && \
 yarn theia download:plugins
 
 # DGL setup
-sudo python3 -m pip install dgl -f https://data.dgl.ai/wheels/repo.html
+cd /local
+python3 -m venv --system-site-packages env_dgl
+env_dgl/bin/python3 -m pip install torch==1.5.0
+env_dgl/bin/python3 -m pip install dgl -f https://data.dgl.ai/wheels/repo.html
 

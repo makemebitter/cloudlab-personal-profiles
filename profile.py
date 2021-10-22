@@ -126,6 +126,7 @@ def create_request(request, params, role, ip, worker_num=None):
     rsync -av /local/ /mnt/local/;
     sudo mount -o bind /mnt/local /local;
     cd /local/repository
+    echo "/mnt/local    /local    none    bind    0    0" | sudo tee -a /etc/fstab
     sudo bash bootstrap.sh\
     '{role}'\
     '{params.jupyterPassword}'\
