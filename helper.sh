@@ -77,6 +77,7 @@ save_space (){
 }
 
 setup_project_user (){
+
     sudo su -c "useradd $PROJECT_USER -s /bin/bash -m -g root"
     sudo usermod -aG sudo $PROJECT_USER
     echo "$PROJECT_USER ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/$PROJECT_USER
@@ -89,7 +90,7 @@ setup_project_user (){
     sudo chmod 600 /home/$PROJECT_USER/.ssh/authorized_keys
     sudo chmod 600 /home/$PROJECT_USER/.ssh/prj_key
     ssh-keygen -y -f $SSH_KEY_FILE | sudo tee -a /home/$PROJECT_USER/.ssh/authorized_keys
-    cp .screenrc /home/$PROJECT_USER
+    cp $MNT_ROOT/local/repository/.screenrc /home/$PROJECT_USER
     cat bashrc | sudo tee -a /home/$PROJECT_USER/.bashrc
 }
 
@@ -103,7 +104,6 @@ generally_good_stuff (){
 
 install_cuda (){
     # Add NVIDIA package repositories
-    cd /local
     wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-ubuntu1804.pin
     sudo mv cuda-ubuntu1804.pin /etc/apt/preferences.d/cuda-repository-pin-600
     sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub
