@@ -14,6 +14,7 @@ source helper.sh
 add_global_vars
 save_space
 install_apt
+install_cuda
 setup_project_user
 generally_good_stuff
 
