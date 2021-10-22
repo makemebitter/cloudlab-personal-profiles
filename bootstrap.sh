@@ -34,7 +34,8 @@ elif [ "$duty" = "s" ]; then
 fi
 # -----------------------------------------------------------------------------
 
-echo "Bootstraping complete"
+echo "Bootstraping complete, rebooting..."
+sudo shutdown -r now
 
 
 

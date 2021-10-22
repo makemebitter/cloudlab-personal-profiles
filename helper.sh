@@ -120,10 +120,10 @@ install_cuda (){
     sudo apt-get update
 
     # Install development and runtime libraries (~4GB)
-    sudo apt-get install -y --no-install-recommends \
+    sudo apt-get install -y --no-install-recommends --allow-downgrades \
         cuda-11-0 \
-        libcudnn8=8.2.4.15-1+cuda11.0  \
-        libcudnn8-dev=8.2.4.15-1+cuda11.0
+        libcudnn8=8.0.4.30-1+cuda11.0  \
+        libcudnn8-dev=8.0.4.30-1+cuda11.0
 
 }
 
