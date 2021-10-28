@@ -5,12 +5,15 @@ add_global_vars (){
     worker_number=$(sed -n -e 's/^.*worker//p' <<<"$worker_name")
     echo "WORKER_NUMBER=$worker_number" | sudo tee -a /etc/environment
     echo "MNT_ROOT=$MNT_ROOT" | sudo tee -a /etc/environment
+    echo "GPU_ENABLED=$GPU_ENABLED" | sudo tee -a /etc/environment
+    echo "DUTY=$duty" | sudo tee -a /etc/environment
     source /etc/environment
 }
 
 wait_workers (){
     # --------------------- Check if every host online -------------------------
     awk 'NR>1 {print $NF}' /etc/hosts | grep -v 'master' > $HOSTS_DIR
+    awk 'NR>1 {print $NF}' /etc/hosts > $ALL_HOSTS_DIR
     if [ "$duty" = "m" ]; then
         readarray -t hosts < $HOSTS_DIR
         while true; do
@@ -42,6 +45,10 @@ install_apt (){
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
     sudo apt-get update
     sudo apt-get install -y $(cat pkglist)
+
+    # setup sysstat
+    sudo sed -i 's/"false"/"true"/g' /etc/default/sysstat
+    sudo service sysstat restart
 }
 
 space_saver (){
@@ -109,6 +116,11 @@ setup_project_user (){
     ssh-keygen -y -f $SSH_KEY_FILE | sudo tee -a /home/$PROJECT_USER/.ssh/authorized_keys
     cp $MNT_ROOT/local/repository/.screenrc /home/$PROJECT_USER
     cat bashrc | sudo tee -a /home/$PROJECT_USER/.bashrc
+}
+
+setup_loggers (){
+    (crontab -l ; echo "/local/gsys/logs/bin/run_loggers.sh $MNT_ROOT $GPU_ENABLED") | crontab
+    echo -e "sudo -H -u $PROJECT_USER bash /local/repository/logs/bin/run_loggers.sh $NFS_DIR $GPU_ENABLED" | sudo tee -a /etc/rc.local
 }
 
 generally_good_stuff (){

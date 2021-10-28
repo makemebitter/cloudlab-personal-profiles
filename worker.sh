@@ -7,4 +7,4 @@
 # done
 
 
-echo "master:$NFS_DIR       $NFS_DIR      nfs auto,nofail,noatime,nolock,intr,tcp,actimeo=1800 0 0" | sudo tee -a /etc/fstab
+echo "master:$NFS_DIR       $NFS_DIR      nfs auto 0 0" | sudo tee -a /etc/fstab

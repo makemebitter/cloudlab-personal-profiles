@@ -33,6 +33,19 @@ yarn theia download:plugins
 # DGL setup
 cd /local
 python3 -m venv --system-site-packages env_dgl
-env_dgl/bin/python3 -m pip install torch==1.5.0
-env_dgl/bin/python3 -m pip install dgl -f https://data.dgl.ai/wheels/repo.html
+sudo env_dgl/bin/python3 -m ipykernel install --name=env_dgl
+
+env_dgl/bin/python3 -m pip install torch==1.7.1 torchvision==0.8.2 torchaudio==0.7.2 ogb
+# env_dgl/bin/python3 -m pip install dgl -f https://data.dgl.ai/wheels/repo.html
+env_dgl/bin/python3 -m pip install dgl-cu110==0.7.1 -f https://data.dgl.ai/wheels/repo.html
+
+git clone https://github.com/dmlc/dgl.git /local/dgl
+cd /local/dgl
+git reset --hard HEAD
+git checkout a9c83bce15246c3e71e372e8128c7e345c136f36
+
+# Git user and email
+git config --global user.email "yuz870@eng.ucsd.edu"
+git config --global user.name "Yuhao Zhang"
+
 

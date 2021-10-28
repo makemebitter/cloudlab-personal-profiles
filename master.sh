@@ -4,8 +4,12 @@ mkdir $NFS_DIR
 echo "$NFS_DIR  *(rw,sync,crossmnt,no_root_squash,crossmnt)" | sudo tee -a  /etc/exports
 sudo /etc/init.d/nfs-kernel-server restart
 
+git clone git@github.com:makemebitter/gsys.git $NFS_DIR/gsys
 
-
+git clone git@github.com:makemebitter/dgl.git $NFS_DIR/dgl
+# cd /local/dgl
+# git reset --hard HEAD
+# git checkout a9c83bce15246c3e71e372e8128c7e345c136f36
 
 
 

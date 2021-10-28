@@ -56,6 +56,9 @@ pc.defineParameter(
     "GPUWorkers", "Workers have GPU or not, default: 1",
     portal.ParameterType.BOOLEAN, True)
 pc.defineParameter(
+    "GPUMaster", "Master has GPU or not, default: 1",
+    portal.ParameterType.BOOLEAN, True)
+pc.defineParameter(
     "privateKey", "Your private ssh key, this is required for greenplum.",
     portal.ParameterType.STRING, "",
     longDescription='''Please create a project
@@ -125,6 +128,7 @@ def create_request(request, params, role, ip, worker_num=None):
     sudo chmod 777 -R /local /mnt;
     rsync -av /local/ /mnt/local/;
     sudo mount -o bind /mnt/local /local;
+    sudo chmod 777 -R /local;
     cd /local/repository;
     echo '/mnt/local    /local    none    bind    0    0' | sudo tee -a /etc/fstab;
     sudo bash bootstrap.sh \
@@ -134,6 +138,7 @@ def create_request(request, params, role, ip, worker_num=None):
     '{params.GPUWorkers}' \
     '{params.gpadminPassword}' \
     '{params.tempFileSystemMount}' \
+    '{params.GPUMaster}' \
     2>&1 | sudo tee -a /local/logs/setup.log
     """.format(**locals())
 
@@ -162,6 +167,7 @@ request = pc.makeRequestRSpec()
 # Link link-0
 link_0 = request.LAN('link-0')
 link_0.Site('undefined')
+
 
 # Master Node
 iface = create_request(request, params, 'm', '10.10.1.1')
