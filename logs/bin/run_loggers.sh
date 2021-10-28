@@ -2,7 +2,7 @@
 NFS_DIR=${1:-"/mnt/nfs"}
 GPU_WORKERS=$2
 duty=$3
-datestr=`date "+%Y_%m_%d_%H_%M_%S"`
+datestr=`date "+%Y_%m_%d"`
 NETWORK_LOG_DIR=$NFS_DIR/logs/${datestr}/network_logs
 DISK_LOG_DIR=$NFS_DIR/logs/${datestr}/disk_logs
 CPU_LOG_DIR=$NFS_DIR/logs/${datestr}/cpu_logs
