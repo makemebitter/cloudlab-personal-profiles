@@ -39,10 +39,10 @@ env_dgl/bin/python3 -m pip install torch==1.7.1 torchvision==0.8.2 torchaudio==0
 # env_dgl/bin/python3 -m pip install dgl -f https://data.dgl.ai/wheels/repo.html
 env_dgl/bin/python3 -m pip install dgl-cu110==0.7.1 -f https://data.dgl.ai/wheels/repo.html
 
-git clone https://github.com/dmlc/dgl.git /local/dgl
-cd /local/dgl
-git reset --hard HEAD
-git checkout a9c83bce15246c3e71e372e8128c7e345c136f36
+# git clone https://github.com/dmlc/dgl.git /local/dgl
+# cd /local/dgl
+# git reset --hard HEAD
+# git checkout a9c83bce15246c3e71e372e8128c7e345c136f36
 
 # Git user and email
 git config --global user.email "yuz870@eng.ucsd.edu"

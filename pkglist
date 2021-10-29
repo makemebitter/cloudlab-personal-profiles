@@ -20,3 +20,4 @@ libx11-dev
 libxkbfile-dev
 libsecret-1-dev
 yarn
+gawk
