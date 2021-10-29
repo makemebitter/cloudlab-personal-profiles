@@ -7,6 +7,8 @@ add_global_vars (){
     echo "MNT_ROOT=$MNT_ROOT" | sudo tee -a /etc/environment
     echo "GPU_ENABLED=$GPU_ENABLED" | sudo tee -a /etc/environment
     echo "DUTY=$duty" | sudo tee -a /etc/environment
+    echo "GPU_WORKERS=$GPU_WORKERS" | sudo tee -a /etc/environment
+    echo "GPU_MASTER=$GPU_MASTER" | sudo tee -a /etc/environment
     source /etc/environment
 }
 
@@ -119,7 +121,7 @@ setup_project_user (){
 }
 
 setup_loggers (){
-    (crontab -l ; echo "/local/gsys/logs/bin/run_loggers.sh $MNT_ROOT $GPU_ENABLED") | crontab
+    # (crontab -l ; echo "/local/gsys/logs/bin/run_loggers.sh $MNT_ROOT $GPU_ENABLED") | crontab
     echo -e "sudo -H -u $PROJECT_USER bash /local/repository/logs/bin/run_loggers.sh $NFS_DIR $GPU_ENABLED" | sudo tee -a /etc/rc.local
 }
 

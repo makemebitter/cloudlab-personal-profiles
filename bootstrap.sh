@@ -1,20 +1,21 @@
 #!/bin/bash
 set -e
 
-duty=${1}
-JUPYTER_PASSWORD=${2:-"root"}
-PRIVATE_KEY=${3}
-GPU_WORKERS=${4}
-GPADMIN_PASSWORD=${5}
-MNT_ROOT=${6}
-GPU_MASTER=${7}
+export duty=${1}
+export JUPYTER_PASSWORD=${2:-"root"}
+export PRIVATE_KEY=${3}
+export GPU_WORKERS=${4}
+export GPADMIN_PASSWORD=${5}
+export MNT_ROOT=${6}
+export GPU_MASTER=${7}
 echo "PRIVATE KEY"
 echo "${PRIVATE_KEY}"
 
 source helper.sh
-GPU_ENABLED=0
 if ( [[ "$duty" = "s" ]] && [[ $GPU_WORKERS -eq 1 ]] ) || ( [[ "$duty" = "m" ]] && [[ $GPU_MASTER -eq 1 ]] ); then
-    GPU_ENABLED=1
+    export GPU_ENABLED=1
+else
+    export GPU_ENABLED=0
 fi
 add_global_vars
 save_space
