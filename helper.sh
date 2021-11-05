@@ -15,7 +15,7 @@ add_global_vars (){
 wait_workers (){
     # --------------------- Check if every host online -------------------------
     awk 'NR>1 {print $NF}' /etc/hosts | grep -v 'master' > $HOSTS_DIR
-    awk 'NR>1 {print $NF}' /etc/hosts > $ALL_HOSTS_DIR
+    awk 'NR>1 {print $1}' /etc/hosts > $ALL_HOSTS_DIR
     if [ "$duty" = "m" ]; then
         readarray -t hosts < $HOSTS_DIR
         while true; do
@@ -118,6 +118,7 @@ setup_project_user (){
     ssh-keygen -y -f $SSH_KEY_FILE | sudo tee -a /home/$PROJECT_USER/.ssh/authorized_keys
     cp $MNT_ROOT/local/repository/.screenrc /home/$PROJECT_USER
     cat bashrc | sudo tee -a /home/$PROJECT_USER/.bashrc
+    sudo chown -R $PROJECT_USER /local
 }
 
 setup_loggers (){
