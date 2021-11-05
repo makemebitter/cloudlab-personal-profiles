@@ -12,7 +12,7 @@ echo "PRIVATE KEY"
 echo "${PRIVATE_KEY}"
 
 source helper.sh
-if ( [[ "$duty" = "s" ]] && [[ $GPU_WORKERS -eq 1 ]] ) || ( [[ "$duty" = "m" ]] && [[ $GPU_MASTER -eq 1 ]] ); then
+if ( [[ "$duty" = "s" ]] && [[ $GPU_WORKERS = "True" ]] ) || ( [[ "$duty" = "m" ]] && [[ $GPU_MASTER = "True" ]] ); then
     export GPU_ENABLED=1
 else
     export GPU_ENABLED=0

@@ -36,8 +36,12 @@ python3 -m venv --system-site-packages env_dgl
 sudo env_dgl/bin/python3 -m ipykernel install --name=env_dgl
 
 env_dgl/bin/python3 -m pip install torch==1.7.1 torchvision==0.8.2 torchaudio==0.7.2 ogb
-# env_dgl/bin/python3 -m pip install dgl -f https://data.dgl.ai/wheels/repo.html
-env_dgl/bin/python3 -m pip install dgl-cu110==0.7.1 -f https://data.dgl.ai/wheels/repo.html
+
+if ( [[ $GPU_ENABLED -eq 1 ]] ); then
+    env_dgl/bin/python3 -m pip install dgl-cu110==0.7.1 -f https://data.dgl.ai/wheels/repo.html
+else
+    env_dgl/bin/python3 -m pip install dgl -f https://data.dgl.ai/wheels/repo.html
+fi
 
 # git clone https://github.com/dmlc/dgl.git /local/dgl
 # cd /local/dgl
