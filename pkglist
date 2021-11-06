@@ -21,3 +21,4 @@ libxkbfile-dev
 libsecret-1-dev
 yarn
 gawk
+ufw

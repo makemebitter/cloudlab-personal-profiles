@@ -16,6 +16,7 @@ wait_workers (){
     # --------------------- Check if every host online -------------------------
     awk 'NR>1 {print $NF}' /etc/hosts | grep -v 'master' > $HOSTS_DIR
     awk 'NR>1 {print $1}' /etc/hosts > $ALL_HOSTS_DIR
+    sort -o $ALL_HOSTS_DIR $ALL_HOSTS_DIR
     if [ "$duty" = "m" ]; then
         readarray -t hosts < $HOSTS_DIR
         while true; do
@@ -51,6 +52,15 @@ install_apt (){
     # setup sysstat
     sudo sed -i 's/"false"/"true"/g' /etc/default/sysstat
     sudo service sysstat restart
+}
+
+add_firewall (){
+    sudo ufw default deny incoming
+    sudo ufw default allow outgoing
+    sudo ufw allow ssh
+    sudo ufw allow from 10.10.1.0/24
+
+    sudo ufw enable
 }
 
 space_saver (){

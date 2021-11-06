@@ -20,6 +20,7 @@ fi
 add_global_vars
 save_space
 install_apt
+add_firewall
 
 if ( [[ $GPU_ENABLED -eq 1 ]] ); then
     install_cuda
