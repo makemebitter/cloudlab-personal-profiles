@@ -20,11 +20,12 @@ with open(os.environ['ALL_HOSTS_COMPLETE_DIR'], 'r') as f:
 
 hosts = [x.rstrip().split() for x in hosts]
 new_hosts = []
-for x in hosts:
-    if x[1] != 'master':
-        new_x = "{}: {}".format(x[1], x[0])
-    else:
-        new_x = "{}: {}".format(x[1]+'0', x[0])
+for i, x in enumerate(hosts):
+    new_x = "m{}: {}".format(i, x[0])
+    # if x[1] != 'master':
+    #     new_x = "{}: {}".format(x[1], x[0])
+    # else:
+    #     new_x = "{}: {}".format(x[1]+'0', x[0])
     new_hosts.append(new_x)
 hosts = new_hosts
 
