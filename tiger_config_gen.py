@@ -19,7 +19,14 @@ with open(os.environ['ALL_HOSTS_COMPLETE_DIR'], 'r') as f:
     hosts = f.readlines()
 
 hosts = [x.rstrip().split() for x in hosts]
-hosts = ["{}: {}".format(x[1], x[0]) for x in hosts]
+new_hosts = []
+for x in hosts:
+    if x[1] != 'master':
+        new_x = "{}: {}".format(x[1], x[0])
+    else:
+        new_x = "{}: {}".format(x[1]+'0', x[0])
+    new_hosts.append(new_x)
+hosts = new_hosts
 
 basicconfig = data['BasicConfig']
 tigergraphconfig = basicconfig['TigerGraph']
