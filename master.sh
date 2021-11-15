@@ -3,6 +3,8 @@ source helper.sh
 mkdir $NFS_DIR
 echo "$NFS_DIR  *(rw,sync,crossmnt,no_root_squash,crossmnt)" | sudo tee -a  /etc/exports
 sudo /etc/init.d/nfs-kernel-server restart
+mkdir $NFS_DIR/ssd
+mount_a2b $NFS_DIR/ssd $SSD_DIR 
 cp $ALL_HOSTS_DIR $NFS_DIR/
 export GIT_SSH_COMMAND="ssh -i /home/$PROJECT_USER/.ssh/prj_key"
 
@@ -30,6 +32,9 @@ tar -xzvf tigergraph-3.3.0-offline.tar.gz
 cd tigergraph-3.3.0-offline
 python3 /local/repository/tiger_config_gen.py --input $(pwd)/install_conf.json --output $(pwd)/install_conf.json
 sudo ./install.sh -n
+source ~/.bashrc
+gadmin stop all -y
+
 
 
 

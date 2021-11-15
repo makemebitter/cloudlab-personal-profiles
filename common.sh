@@ -1,6 +1,9 @@
 set -e
 source helper.sh
 CUR_DIR=$(pwd)
+# Make extra filesystem, caution, not generic on all machines
+create_ssd_partition
+
 # python
 sudo -H python3 -m pip install -r requirements_master.txt
 # Jupyter extension configs
@@ -52,6 +55,24 @@ mkdir -p $TIGER_HOME/app
 mkdir -p $TIGER_HOME/data
 mkdir -p $TIGER_HOME/log
 mkdir -p $TIGER_HOME/tmp
+
+# Hadoop
+cd /local
+wget https://archive.apache.org/dist/hadoop/core/hadoop-2.7.3/hadoop-2.7.3.tar.gz
+tar -xvf hadoop-2.7.3.tar.gz 
+mv hadoop-2.7.3 $HADOOP_HOME
+cp $ALL_HOSTS_DIR $HADOOP_HOME/etc/hadoop/slaves
+echo "master" | tee $HADOOP_HOME/etc/hadoop/workers
+echo "export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin" | tee -a ~/.bashrc
+source ~/.bashrc
+echo "export JAVA_HOME=e" | tee -a $HADOOP_HOME/etc/hadoop/hadoop-env.sh
+JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
+add_one_global_var "JAVA_HOME" $JAVA_HOME
+echo "export JAVA_HOME=$JAVA_HOME" | tee -a $HADOOP_HOME/etc/hadoop/hadoop-env.shecho "export JAVA_HOME=$JAVA_HOME" | tee -a $HADOOP_HOME/etc/hadoop/hadoop-env.sh
+cp core-site.xml $HADOOP_HOME/etc/hadoop/core-site.xml
+cp yarn-site.xml $HADOOP_HOME/etc/hadoop/yarn-site.xml
+cp hdfs-site.xml $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+
 
 # git clone https://github.com/dmlc/dgl.git /local/dgl
 # cd /local/dgl

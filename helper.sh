@@ -26,6 +26,11 @@ add_global_vars (){
     source /etc/environment
 }
 
+create_ssd_partition(){
+    mkdir -p $SSD_DIR
+    sudo /usr/local/etc/emulab/mkextrafs.pl $SSD_DIR
+}
+
 wait_workers (){
     # --------------------- Check if every host online -------------------------
     awk 'NR>1 {print $NF}' /etc/hosts | grep -v 'master' > $HOSTS_DIR
@@ -81,16 +86,25 @@ add_firewall (){
     sudo systemctl restart sshd 
 }
 
+migrate_a2b (){
+    dir_a="$1"
+    dir_b="$2"
+    sudo mkdir -p $dir_b
+    sudo rsync -avr $dir_a/ $dir_b/
+    sudo rm -rvf $dir_a/*
+    sudo mount -o bind $dir_b/ $dir_a/
+    echo "$dir_b/    $dir_a/    none    bind    0    0" | sudo tee -a /etc/fstab
+}
+
 space_saver (){
     ori_dir=$1
     new_dir=$2
-    sudo mkdir ${MNT_ROOT}/$new_dir
-    sudo rsync -avr $ori_dir/ ${MNT_ROOT}/$new_dir/
-    sudo rm -rvf $ori_dir/*
-    sudo mount -o bind ${MNT_ROOT}/$new_dir/ $ori_dir/
-    echo "${MNT_ROOT}/$new_dir/    $ori_dir/    none    bind    0    0" | sudo tee -a /etc/fstab
+    dir_b="${MNT_ROOT}/$new_dir"
+    dir_a="$ori_dir"
+    migrate_a2b $dir_a $dir_b
 
 }
+
 
 save_space (){
     # sudo mkdir ${MNT_ROOT}/home
@@ -207,6 +221,9 @@ install_cuda (){
         cuda-11-0 \
         libcudnn8=8.0.4.30-1+cuda11.0  \
         libcudnn8-dev=8.0.4.30-1+cuda11.0
+
+    # Save space
+    space_saver "/usr/local/cuda-11.0" "usr.local.cuda"
 
 }
 

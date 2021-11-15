@@ -8,3 +8,6 @@ THEIA_DEFAULT_PLUGINS=local-dir:/local/theia/plugins
 NCCL_SOCKET_IFNAME='enp94s0f0'
 GLOO_SOCKET_IFNAME='enp94s0f0'
 TIGER_HOME='/mnt/tigergraph/tigergraph'
+HADOOP_HOME='/local/hadoop'
+HADOOP_PREFIX='/local/hadoop'
+SSD_DIR=/mnt/ssd
