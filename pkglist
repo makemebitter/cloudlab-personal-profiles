@@ -22,3 +22,5 @@ libsecret-1-dev
 yarn
 gawk
 ufw
+jq
+musl

@@ -1,14 +1,28 @@
+add_one_global_var (){
+    echo "$1=$2" | sudo tee -a /etc/environment
+    source /etc/environment
+}
+
 add_global_vars (){
     sudo cat constants.sh | sudo tee -a /etc/environment
     worker_name=$(cat /proc/sys/kernel/hostname | cut -d'.' -f1)
-    echo "WORKER_NAME=$worker_name" | sudo tee -a /etc/environment
+    add_one_global_var "WORKER_NAME" $worker_name
+    # echo "WORKER_NAME=$worker_name" | sudo tee -a /etc/environment
+
     worker_number=$(sed -n -e 's/^.*worker//p' <<<"$worker_name")
-    echo "WORKER_NUMBER=$worker_number" | sudo tee -a /etc/environment
-    echo "MNT_ROOT=$MNT_ROOT" | sudo tee -a /etc/environment
-    echo "GPU_ENABLED=$GPU_ENABLED" | sudo tee -a /etc/environment
-    echo "DUTY=$duty" | sudo tee -a /etc/environment
-    echo "GPU_WORKERS=$GPU_WORKERS" | sudo tee -a /etc/environment
-    echo "GPU_MASTER=$GPU_MASTER" | sudo tee -a /etc/environment
+    # echo "WORKER_NUMBER=$worker_number" | sudo tee -a /etc/environment
+    # echo "MNT_ROOT=$MNT_ROOT" | sudo tee -a /etc/environment
+    # echo "GPU_ENABLED=$GPU_ENABLED" | sudo tee -a /etc/environment
+    # echo "DUTY=$duty" | sudo tee -a /etc/environment
+    # echo "GPU_WORKERS=$GPU_WORKERS" | sudo tee -a /etc/environment
+    # echo "GPU_MASTER=$GPU_MASTER" | sudo tee -a /etc/environment
+    add_one_global_var "WORKER_NAME" $worker_name
+    add_one_global_var "WORKER_NUMBER" $worker_number
+    add_one_global_var "MNT_ROOT" $MNT_ROOT
+    add_one_global_var "GPU_ENABLED" $GPU_ENABLED
+    add_one_global_var "DUTY" $duty
+    add_one_global_var "GPU_WORKERS" $GPU_WORKERS
+    add_one_global_var "GPU_MASTER" $GPU_MASTER
     source /etc/environment
 }
 
@@ -16,7 +30,9 @@ wait_workers (){
     # --------------------- Check if every host online -------------------------
     awk 'NR>1 {print $NF}' /etc/hosts | grep -v 'master' > $HOSTS_DIR
     awk 'NR>1 {print $1}' /etc/hosts > $ALL_HOSTS_DIR
+    awk 'NR>1 {print $1 " " $NF}' /etc/hosts > $ALL_HOSTS_COMPLETE_DIR
     sort -o $ALL_HOSTS_DIR $ALL_HOSTS_DIR
+    sort -o $ALL_HOSTS_COMPLETE_DIR $ALL_HOSTS_COMPLETE_DIR
     if [ "$duty" = "m" ]; then
         readarray -t hosts < $HOSTS_DIR
         while true; do
@@ -59,8 +75,10 @@ add_firewall (){
     sudo ufw default allow outgoing
     sudo ufw allow ssh
     sudo ufw allow from 10.10.1.0/24
-
+    sudo systemctl enable ufw
     sudo ufw enable
+    echo "AllowUsers      yhzhang $PROJECT_USER" | sudo tee -a /etc/ssh/sshd_config
+    sudo systemctl restart sshd 
 }
 
 space_saver (){
@@ -113,22 +131,45 @@ save_space (){
 }
 
 setup_project_user (){
-
+    # add prj admin user
     sudo su -c "useradd $PROJECT_USER -s /bin/bash -m -g root"
+    # add group
+    sudo groupadd $PROJECT_USER
+    # add user to group
+    sudo usermod -a -G $PROJECT_USER $PROJECT_USER
     sudo usermod -aG sudo $PROJECT_USER
     echo "$PROJECT_USER ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/$PROJECT_USER
     sudo chown $PROJECT_USER -R  /local /$MNT_ROOT
     echo "${PRIVATE_KEY}" > $SSH_KEY_FILE
     sudo chown $PROJECT_USER $SSH_KEY_FILE
-    sudo -H -u $PROJECT_USER mkdir -m 700 /home/$PROJECT_USER/.ssh
-    sudo -H -u $PROJECT_USER touch /home/$PROJECT_USER/.ssh/authorized_keys
-    sudo -H -u $PROJECT_USER cp $SSH_KEY_FILE /home/$PROJECT_USER/.ssh/prj_key
-    sudo chmod 600 /home/$PROJECT_USER/.ssh/authorized_keys
-    sudo chmod 600 /home/$PROJECT_USER/.ssh/prj_key
-    ssh-keygen -y -f $SSH_KEY_FILE | sudo tee -a /home/$PROJECT_USER/.ssh/authorized_keys
+    PROJECT_SSH_DIR="/home/$PROJECT_USER/.ssh"
+    add_one_global_var "PROJECT_SSH_DIR" $PROJECT_SSH_DIR
+
+    sudo -H -u $PROJECT_USER mkdir -m 700 $PROJECT_SSH_DIR
+
+    PROJECT_AUTHORIZED_KEYS="$PROJECT_SSH_DIR/authorized_keys"
+    add_one_global_var "PROJECT_AUTHORIZED_KEYS" $PROJECT_AUTHORIZED_KEYS
+
+    sudo -H -u $PROJECT_USER touch $PROJECT_AUTHORIZED_KEYS
+
+    PROJECT_SSH_KEY="$PROJECT_SSH_DIR/prj_key"
+    add_one_global_var "PROJECT_SSH_KEY" $PROJECT_SSH_KEY
+
+    sudo -H -u $PROJECT_USER cp $SSH_KEY_FILE $PROJECT_SSH_KEY
+
+    sudo chmod 600 $PROJECT_AUTHORIZED_KEYS
+    sudo chmod 600 $PROJECT_SSH_KEY
+    ssh-keygen -y -f $SSH_KEY_FILE | sudo tee -a $PROJECT_AUTHORIZED_KEYS
+
+    PROJECT_SSH_KEY_PUB="$PROJECT_SSH_DIR/prj_key.pub"
+    add_one_global_var "PROJECT_SSH_KEY_PUB" $PROJECT_SSH_KEY_PUB
+
+    ssh-keygen -y -f $SSH_KEY_FILE > $PROJECT_SSH_KEY_PUB
     cp $MNT_ROOT/local/repository/.screenrc /home/$PROJECT_USER
     cat bashrc | sudo tee -a /home/$PROJECT_USER/.bashrc
     sudo chown -R $PROJECT_USER /local
+
+     
 }
 
 setup_loggers (){

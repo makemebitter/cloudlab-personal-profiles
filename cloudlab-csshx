@@ -1,0 +1,15 @@
+
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    '--input_str', type=str
+)
+args = parser.parse_args()
+input_str = args.input_str
+
+creds = [x.split(' ')[-1].rstrip('\t\t') for x in input_str.splitlines()]
+
+foward = 'ssh -N -L 8889:localhost:8888 -L 3000:localhost:3000 ' + creds[0]
+
+print(foward)
+print('csshx ' + ' \\\n'.join(creds))

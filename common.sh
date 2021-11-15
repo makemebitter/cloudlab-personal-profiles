@@ -1,6 +1,6 @@
 set -e
 source helper.sh
-
+CUR_DIR=$(pwd)
 # python
 sudo -H python3 -m pip install -r requirements_master.txt
 # Jupyter extension configs
@@ -29,6 +29,9 @@ cd /local/theia
 yarn --cache-folder ./ycache && rm -rf ./ycache && \
  NODE_OPTIONS="--max_old_space_size=4096" yarn theia build ; \
 yarn theia download:plugins
+mkdir $HOME/.theia
+cd $CUR_DIR
+cp settings.json $HOME/.theia/ 
 
 # DGL setup
 cd /local
@@ -42,6 +45,13 @@ if ( [[ $GPU_ENABLED -eq 1 ]] ); then
 else
     env_dgl/bin/python3 -m pip install dgl -f https://data.dgl.ai/wheels/repo.html
 fi
+
+# tigergraph stuff
+
+mkdir -p $TIGER_HOME/app
+mkdir -p $TIGER_HOME/data
+mkdir -p $TIGER_HOME/log
+mkdir -p $TIGER_HOME/tmp
 
 # git clone https://github.com/dmlc/dgl.git /local/dgl
 # cd /local/dgl
