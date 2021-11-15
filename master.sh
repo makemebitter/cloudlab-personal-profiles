@@ -4,7 +4,8 @@ mkdir $NFS_DIR
 echo "$NFS_DIR  *(rw,sync,crossmnt,no_root_squash,crossmnt)" | sudo tee -a  /etc/exports
 sudo /etc/init.d/nfs-kernel-server restart
 mkdir $NFS_DIR/ssd
-mount_a2b $NFS_DIR/ssd $SSD_DIR 
+mkdir $SSD_DIR/nfs
+migrate_a2b $NFS_DIR/ssd $SSD_DIR/nfs
 cp $ALL_HOSTS_DIR $NFS_DIR/
 export GIT_SSH_COMMAND="ssh -i /home/$PROJECT_USER/.ssh/prj_key"
 
@@ -43,5 +44,17 @@ cd /local
 wget https://github.com/prasmussen/gdrive/releases/download/2.1.1/gdrive_2.1.1_linux_amd64.tar.gz
 tar -xvzf gdrive_2.1.1_linux_amd64.tar.gz
 sudo mv gdrive-linux-x64 /usr/local/bin/gdrive
+
+
+# Execution
+
+# use start-all.sh manully
+# Hadoop master
+# $HADOOP_HOME/bin/hdfs namenode -format "spark_cluster"
+# $HADOOP_HOME/sbin/hadoop-daemon.sh --script hdfs start namenode
+# $HADOOP_HOME/sbin/yarn-daemon.sh start resourcemanager
+# # Hadoop slave
+# $HADOOP_HOME/sbin/hadoop-daemon.sh --script hdfs start datanode
+# $HADOOP_HOME/sbin/yarn-daemon.sh start nodemanager
 
 

@@ -69,9 +69,10 @@ echo "export JAVA_HOME=e" | tee -a $HADOOP_HOME/etc/hadoop/hadoop-env.sh
 JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
 add_one_global_var "JAVA_HOME" $JAVA_HOME
 echo "export JAVA_HOME=$JAVA_HOME" | tee -a $HADOOP_HOME/etc/hadoop/hadoop-env.shecho "export JAVA_HOME=$JAVA_HOME" | tee -a $HADOOP_HOME/etc/hadoop/hadoop-env.sh
-cp core-site.xml $HADOOP_HOME/etc/hadoop/core-site.xml
-cp yarn-site.xml $HADOOP_HOME/etc/hadoop/yarn-site.xml
-cp hdfs-site.xml $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+cp $BOOTSTRAP_ROOT/core-site.xml $HADOOP_HOME/etc/hadoop/
+cp $BOOTSTRAP_ROOT/yarn-site.xml $HADOOP_HOME/etc/hadoop/
+cp $BOOTSTRAP_ROOT/hdfs-site.xml $HADOOP_HOME/etc/hadoop/
+cp $BOOTSTRAP_ROOT/mapred-site.xml $HADOOP_HOME/etc/hadoop/
 
 
 # git clone https://github.com/dmlc/dgl.git /local/dgl

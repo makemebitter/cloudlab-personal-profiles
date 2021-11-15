@@ -11,3 +11,4 @@ TIGER_HOME='/mnt/tigergraph/tigergraph'
 HADOOP_HOME='/local/hadoop'
 HADOOP_PREFIX='/local/hadoop'
 SSD_DIR=/mnt/ssd
+BOOTSTRAP_ROOT=/local/repository

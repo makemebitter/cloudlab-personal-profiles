@@ -29,6 +29,7 @@ add_global_vars (){
 create_ssd_partition(){
     mkdir -p $SSD_DIR
     sudo /usr/local/etc/emulab/mkextrafs.pl $SSD_DIR
+    sudo chown -R $PROJECT_USER $SSD_DIR
 }
 
 wait_workers (){
@@ -83,6 +84,7 @@ add_firewall (){
     sudo systemctl enable ufw
     sudo ufw enable
     echo "AllowUsers      yhzhang $PROJECT_USER" | sudo tee -a /etc/ssh/sshd_config
+    echo "StrictHostKeyChecking accept-new" | sudo tee -a /etc/ssh/sshd_config
     sudo systemctl restart sshd 
 }
 
