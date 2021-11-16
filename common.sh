@@ -58,17 +58,14 @@ mkdir -p $TIGER_HOME/tmp
 
 # Hadoop
 cd /local
-wget https://archive.apache.org/dist/hadoop/core/hadoop-2.7.3/hadoop-2.7.3.tar.gz
-tar -xvf hadoop-2.7.3.tar.gz 
-mv hadoop-2.7.3 $HADOOP_HOME
+wget https://archive.apache.org/dist/hadoop/core/hadoop-2.7.2/hadoop-2.7.2.tar.gz
+tar -xvf hadoop-2.7.2.tar.gz 
+mv hadoop-2.7.2 $HADOOP_HOME
 cp $ALL_HOSTS_DIR $HADOOP_HOME/etc/hadoop/slaves
 echo "master" | tee $HADOOP_HOME/etc/hadoop/workers
 echo "export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin" | tee -a ~/.bashrc
 source ~/.bashrc
-echo "export JAVA_HOME=e" | tee -a $HADOOP_HOME/etc/hadoop/hadoop-env.sh
-JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
-add_one_global_var "JAVA_HOME" $JAVA_HOME
-echo "export JAVA_HOME=$JAVA_HOME" | tee -a $HADOOP_HOME/etc/hadoop/hadoop-env.shecho "export JAVA_HOME=$JAVA_HOME" | tee -a $HADOOP_HOME/etc/hadoop/hadoop-env.sh
+echo "export JAVA_HOME=$JAVA_HOME" | tee -a $HADOOP_HOME/etc/hadoop/hadoop-env.sh
 cp $BOOTSTRAP_ROOT/core-site.xml $HADOOP_HOME/etc/hadoop/
 cp $BOOTSTRAP_ROOT/yarn-site.xml $HADOOP_HOME/etc/hadoop/
 cp $BOOTSTRAP_ROOT/hdfs-site.xml $HADOOP_HOME/etc/hadoop/

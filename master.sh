@@ -17,15 +17,13 @@ git clone git@github.com:makemebitter/dgl.git $NFS_DIR/dgl
 # git checkout a9c83bce15246c3e71e372e8128c7e345c136f36
 
 
-
-# # run 
-# screen -dmS bg bash -c "nohup jupyter notebook --no-browser --ip 0.0.0.0 --notebook-dir=/ > /local/logs/jupyter.log 2>&1 \
-# & nohup yarn theia start / --hostname=127.0.0.1 > /local/logs/theia.log 2>&1 &"
-
-
+# Gdrive
+cd /local 
+wget https://github.com/prasmussen/gdrive/releases/download/2.1.1/gdrive_2.1.1_linux_amd64.tar.gz
+tar -xvzf gdrive_2.1.1_linux_amd64.tar.gz
+sudo mv gdrive-linux-x64 /usr/local/bin/gdrive
 
 # Tigergraph
-
 cd /local
 wget https://dl.tigergraph.com/enterprise-edition/tigergraph-3.3.0-offline.tar.gz
 tar -xzvf tigergraph-3.3.0-offline.tar.gz
@@ -39,11 +37,28 @@ gadmin stop all -y
 
 
 
-# Gdrive
-cd /local 
-wget https://github.com/prasmussen/gdrive/releases/download/2.1.1/gdrive_2.1.1_linux_amd64.tar.gz
-tar -xvzf gdrive_2.1.1_linux_amd64.tar.gz
-sudo mv gdrive-linux-x64 /usr/local/bin/gdrive
+
+
+
+
+
+# Giraph
+cd /local
+git clone https://github.com/apache/giraph.git $GIRAPH_HOME/
+cd $GIRAPH_HOME
+git checkout release-1.3
+mvn -Phadoop_2 -Dhadoop.version=2.7.2 package -DskipTests
+
+mkdir -p $HADOOP_HOME/share/hadoop/giraph
+
+cp $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-2.7.2-jar-with-dependencies.jar $HADOOP_HOME/share/hadoop/giraph/
+
+cp ./giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-2.5.1-jar-with-dependencies.jar /home/disk1/software/hadoop/hadoop-2.5.1/share/hadoop/giraph 
+
+
+
+
+
 
 
 # Execution

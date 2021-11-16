@@ -74,6 +74,9 @@ install_apt (){
     # setup sysstat
     sudo sed -i 's/"false"/"true"/g' /etc/default/sysstat
     sudo service sysstat restart
+
+    sudo apt-get install -y openjdk-8-jdk
+    sudo update-java-alternatives --set /usr/lib/jvm/java-1.8.0-openjdk-amd64
 }
 
 add_firewall (){
