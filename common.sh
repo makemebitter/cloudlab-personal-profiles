@@ -4,6 +4,10 @@ CUR_DIR=$(pwd)
 # Make extra filesystem, caution, not generic on all machines
 create_ssd_partition
 
+# Git user and email
+git config --global user.email "yuz870@eng.ucsd.edu"
+git config --global user.name "Yuhao Zhang"
+
 # python
 sudo -H python3 -m pip install -r requirements_master.txt
 # Jupyter extension configs
@@ -71,14 +75,58 @@ cp $BOOTSTRAP_ROOT/yarn-site.xml $HADOOP_HOME/etc/hadoop/
 cp $BOOTSTRAP_ROOT/hdfs-site.xml $HADOOP_HOME/etc/hadoop/
 cp $BOOTSTRAP_ROOT/mapred-site.xml $HADOOP_HOME/etc/hadoop/
 
+# Spark
+cd /local
+wget https://dlcdn.apache.org/spark/spark-3.2.0/spark-3.2.0-bin-hadoop2.7.tgz
+tar -xvf spark-3.2.0-bin-hadoop2.7.tgz
+mv spark-3.2.0-bin-hadoop2.7 $SPARK_HOME
+echo "export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin" | tee -a ~/.bashrc
+source ~/.bashrc
+cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh;
+
+cp $ALL_HOSTS_DIR $SPARK_HOME/conf/workers
+echo "export PYSPARK_PYTHON=$DGL_PY/bin/python3" | tee -a $SPARK_HOME/conf/spark-env.sh
+
+
+
+
+# Giraph
+cd /local
+git clone https://github.com/apache/giraph.git $GIRAPH_HOME/
+cd $GIRAPH_HOME
+git checkout release-1.3
+mvn -Phadoop_2 -Dhadoop.version=2.7.2 package -DskipTests
+
+mkdir -p $HADOOP_HOME/share/hadoop/giraph
+
+cp $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-2.7.2-jar-with-dependencies.jar $HADOOP_HOME/share/hadoop/giraph/
+
+cp $GIRAPH_HOME/giraph-core/target/giraph-1.3.0-SNAPSHOT-for-hadoop-2.7.2-jar-with-dependencies.jar $HADOOP_HOME/share/hadoop/giraph/
+
+
+export GUAVA_JAR=$GIRAPH_HOME/giraph-dist/target/giraph-1.3.0-SNAPSHOT-for-hadoop-2.7.2-bin/giraph-1.3.0-SNAPSHOT-for-hadoop-2.7.2/lib/guava-21.0.jar
+
+rm -rf $HADOOP_HOME/share/hadoop/hdfs/lib/guava-11.0.2.jar
+rm -rf $HADOOP_HOME/share/hadoop/tools/lib/guava-11.0.2.jar
+rm -rf $HADOOP_HOME/share/hadoop/httpfs/tomcat/webapps/webhdfs/WEB-INF/lib/guava-11.0.2.jar
+rm -rf $HADOOP_HOME/share/hadoop/yarn/lib/guava-11.0.2.jar
+rm -rf $HADOOP_HOME/share/hadoop/common/lib/guava-11.0.2.jar
+
+
+cp $GUAVA_JAR $HADOOP_HOME/share/hadoop/hdfs/lib/
+cp $GUAVA_JAR $HADOOP_HOME/share/hadoop/tools/lib/
+cp $GUAVA_JAR $HADOOP_HOME/share/hadoop/httpfs/tomcat/webapps/webhdfs/WEB-INF/lib/
+cp $GUAVA_JAR $HADOOP_HOME/share/hadoop/yarn/lib/
+cp $GUAVA_JAR $HADOOP_HOME/share/hadoop/common/lib/
+
+
+
 
 # git clone https://github.com/dmlc/dgl.git /local/dgl
 # cd /local/dgl
 # git reset --hard HEAD
 # git checkout a9c83bce15246c3e71e372e8128c7e345c136f36
 
-# Git user and email
-git config --global user.email "yuz870@eng.ucsd.edu"
-git config --global user.name "Yuhao Zhang"
+
 
 

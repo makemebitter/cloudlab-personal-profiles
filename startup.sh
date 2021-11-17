@@ -4,4 +4,7 @@ nohup jupyter notebook --no-browser --ip 127.0.0.1 --notebook-dir=/ > /local/log
 nohup yarn --cwd /local/theia theia start --hostname=127.0.0.1 > /local/logs/theia.log 2>&1 &
 cd logs/bin
 . run_loggers.sh
-$HADOOP_HOME/sbin/start-all.sh
+if [[ "$WORKER_NAME" = "master" ]]; then
+	$HADOOP_HOME/sbin/start-all.sh
+	$SPARK_HOME/sbin/start-all.sh
+fi
