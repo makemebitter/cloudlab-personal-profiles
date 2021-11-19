@@ -32,7 +32,7 @@ cd tigergraph-3.3.0-offline
 python3 /local/repository/tiger_config_gen.py --input $(pwd)/install_conf.json --output $(pwd)/install_conf.json
 sudo ./install.sh -n
 source ~/.bashrc
-gadmin stop all -y
+$TIGER_HOME/app/cmd/gadmin stop all -y
 
 
 
