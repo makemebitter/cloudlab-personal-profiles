@@ -16,7 +16,6 @@ add_global_vars (){
     # echo "DUTY=$duty" | sudo tee -a /etc/environment
     # echo "GPU_WORKERS=$GPU_WORKERS" | sudo tee -a /etc/environment
     # echo "GPU_MASTER=$GPU_MASTER" | sudo tee -a /etc/environment
-    add_one_global_var "WORKER_NAME" $worker_name
     add_one_global_var "WORKER_NUMBER" $worker_number
     add_one_global_var "MNT_ROOT" $MNT_ROOT
     add_one_global_var "GPU_ENABLED" $GPU_ENABLED
@@ -86,9 +85,8 @@ install_apt (){
 add_firewall (){
     sudo ufw default deny incoming
     sudo ufw default allow outgoing
-    sudo ufw allow ssh
+    sudo ufw allow 22/tcp
     sudo ufw allow from 10.10.1.0/24
-    sudo systemctl enable ufw
     sudo ufw enable
     echo "AllowUsers      yhzhang $PROJECT_USER" | sudo tee -a /etc/ssh/sshd_config
     echo "StrictHostKeyChecking accept-new" | sudo tee -a /etc/ssh/sshd_config
