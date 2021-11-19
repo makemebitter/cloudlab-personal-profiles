@@ -26,7 +26,6 @@ if ( [[ $GPU_ENABLED -eq 1 ]] ); then
     install_cuda
 fi
 setup_project_user
-setup_loggers
 generally_good_stuff
 wait_workers
 
@@ -46,6 +45,7 @@ fi
 # -----------------------------------------------------------------------------
 
 echo "Bootstraping complete, rebooting..."
+touch /bootstrap/BOOTSTRAP_DONE
 sudo shutdown -r now
 
 

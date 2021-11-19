@@ -129,8 +129,9 @@ def create_request(request, params, role, ip, worker_num=None):
     rsync -av /local/ /mnt/local/;
     sudo mount -o bind /mnt/local /local;
     sudo chmod 777 -R /local;
-    cd /local/repository;
     echo '/mnt/local    /local    none    bind    0    0' | sudo tee -a /etc/fstab;
+    sudo mkdir /bootstrap;
+    cd /local/repository;
     sudo bash bootstrap.sh \
     '{role}' \
     '{params.jupyterPassword}' \
@@ -139,7 +140,7 @@ def create_request(request, params, role, ip, worker_num=None):
     '{params.gpadminPassword}' \
     '{params.tempFileSystemMount}' \
     '{params.GPUMaster}' \
-    2>&1 | sudo tee -a /local/logs/setup.log
+    2>&1 | sudo tee -a /bootstrap/setup.log
     """.format(**locals())
 
     req.addService(
