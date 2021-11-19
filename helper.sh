@@ -89,7 +89,6 @@ add_firewall (){
     sudo ufw allow from 10.10.1.0/24
     sudo ufw enable
     echo "AllowUsers      yhzhang $PROJECT_USER" | sudo tee -a /etc/ssh/sshd_config
-    echo "StrictHostKeyChecking accept-new" | sudo tee -a /etc/ssh/sshd_config
     sudo systemctl restart sshd 
 }
 

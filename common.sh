@@ -4,6 +4,10 @@ CUR_DIR=$(pwd)
 # Make extra filesystem, caution, not generic on all machines
 create_ssd_partition
 
+# ssh setting
+echo "Host *" | tee ~/.ssh/config
+echo "    StrictHostKeyChecking no" | tee -a ~/.ssh/config
+
 # Git user and email
 git config --global user.email "yuz870@eng.ucsd.edu"
 git config --global user.name "Yuhao Zhang"
