@@ -32,9 +32,9 @@ export NVM_DIR="$HOME/.nvm"
 nvm install 12.14.1
 mkdir /local/theia
 # wget https://raw.githubusercontent.com/theia-ide/theia-apps/a83be54ff44f087c87d8652f05ec73538ea055f7/theia-python-docker/latest.package.json -O /local/theia/package.json
-wget https://raw.githubusercontent.com/theia-ide/theia-apps/master/theia-python-docker/latest.package.json -O /local/theia/package.json
+# wget https://raw.githubusercontent.com/theia-ide/theia-apps/master/theia-python-docker/latest.package.json -O /local/theia/package.json
 
-cp latest.package.json ca
+cp latest.package.json /local/theia/package.json
 cd /local/theia
 yarn --cache-folder ./ycache && rm -rf ./ycache && \
  NODE_OPTIONS="--max_old_space_size=4096" yarn theia build ; \
@@ -63,6 +63,11 @@ mkdir -p $TIGER_HOME/data
 mkdir -p $TIGER_HOME/log
 mkdir -p $TIGER_HOME/tmp
 
+# Sdk and scala
+curl -s "https://get.sdkman.io" | bash
+source "/home/projectadmin/.sdkman/bin/sdkman-init.sh"
+sdk install scala 2.12.15
+
 # Hadoop
 cd /local
 wget https://archive.apache.org/dist/hadoop/core/hadoop-2.7.2/hadoop-2.7.2.tar.gz
@@ -90,7 +95,7 @@ cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh;
 cp $ALL_HOSTS_DIR $SPARK_HOME/conf/workers
 echo "export PYSPARK_PYTHON=$DGL_PY/bin/python3" | tee -a $SPARK_HOME/conf/spark-env.sh
 echo "export SPARK_MASTER_HOST=master" | tee -a $SPARK_HOME/conf/spark-env.sh
-
+echo "export SPARK_LOCAL_DIRS=$SPARK_LOCAL_DIRS" | tee -a $SPARK_HOME/conf/spark-env.sh
 
 
 # Giraph
