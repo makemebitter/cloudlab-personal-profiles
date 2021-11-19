@@ -39,35 +39,6 @@ gadmin stop all -y
 
 
 
-
-
-
-# Giraph
-cd /local
-git clone https://github.com/apache/giraph.git $GIRAPH_HOME/
-cd $GIRAPH_HOME
-git checkout release-1.3
-mvn -Phadoop_2 -Dhadoop.version=2.7.2 package -DskipTests
-
-mkdir -p $HADOOP_HOME/share/hadoop/giraph
-
-cp $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-2.7.2-jar-with-dependencies.jar $HADOOP_HOME/share/hadoop/giraph/
-
-cp $GIRAPH_HOME/giraph-core/target/giraph-1.3.0-SNAPSHOT-for-hadoop-2.7.2-jar-with-dependencies.jar $HADOOP_HOME/share/hadoop/giraph/
-
-
-export GUAVA_JAR=$GIRAPH_HOME/giraph-dist/target/giraph-1.3.0-SNAPSHOT-for-hadoop-2.7.2-bin/giraph-1.3.0-SNAPSHOT-for-hadoop-2.7.2/lib/guava-21.0.jar
-cp $GUAVA_JAR $HADOOP_HOME/hadoop/share/hadoop/hdfs/lib/
-cp $GUAVA_JAR $HADOOP_HOME/hadoop/share/hadoop/tools/lib/
-cp $GUAVA_JAR $HADOOP_HOME/hadoop/share/hadoop/httpfs/tomcat/webapps/webhdfs/WEB-INF/lib/
-cp $GUAVA_JAR $HADOOP_HOME/hadoop/share/hadoop/yarn/lib/
-cp $GUAVA_JAR $HADOOP_HOME/hadoop/share/hadoop/common/lib/
-
-
-
-
-
-
 # Execution
 
 # use start-all.sh manully

@@ -77,6 +77,10 @@ install_apt (){
 
     sudo apt-get install -y openjdk-8-jdk
     sudo update-java-alternatives --set /usr/lib/jvm/java-1.8.0-openjdk-amd64
+    export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+    add_one_global_var JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
+
+
 }
 
 add_firewall (){
