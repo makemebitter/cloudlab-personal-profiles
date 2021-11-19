@@ -21,7 +21,7 @@ git clone git@github.com:makemebitter/dgl.git $NFS_DIR/dgl
 cd /local 
 wget https://github.com/prasmussen/gdrive/releases/download/2.1.1/gdrive_2.1.1_linux_amd64.tar.gz
 tar -xvzf gdrive_2.1.1_linux_amd64.tar.gz
-sudo mv gdrive-linux-x64 /usr/local/bin/gdrive
+sudo mv gdrive /usr/local/bin/gdrive
 
 # Tigergraph
 cd /local
