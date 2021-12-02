@@ -54,7 +54,7 @@ yarn --cache-folder ./ycache && rm -rf ./ycache && \
  NODE_OPTIONS="--max_old_space_size=4096" yarn theia build ; \
 yarn theia download:plugins
 mkdir $HOME/.theia
-cd $CUR_DIR
+cd $BOOTSTRAP_ROOT
 cp settings.json $HOME/.theia/ 
 sudo mkdir /.metals
 sudo chown $PROJECT_USER /.metals
@@ -129,7 +129,7 @@ cp $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop
 cp $GIRAPH_HOME/giraph-core/target/giraph-1.3.0-SNAPSHOT-for-hadoop-2.7.2-jar-with-dependencies.jar $HADOOP_HOME/share/hadoop/giraph/
 
 
-export GUAVA_JAR=$GIRAPH_HOME/giraph-dist/target/giraph-1.3.0-SNAPSHOT-for-hadoop-2.7.2-bin/giraph-1.3.0-SNAPSHOT-for-hadoop-2.7.2/lib/guava-21.0.jar
+# export GUAVA_JAR=$GIRAPH_HOME/giraph-dist/target/giraph-1.3.0-SNAPSHOT-for-hadoop-2.7.2-bin/giraph-1.3.0-SNAPSHOT-for-hadoop-2.7.2/lib/guava-21.0.jar
 
 
 # There are problems on guava, would break HDFS
