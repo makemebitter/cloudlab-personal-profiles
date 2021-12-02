@@ -23,6 +23,15 @@ sudo -H python3 -m jupyter nbextension enable execute_time/ExecuteTime --system 
 sudo -H python3 -m jupyter nbextension enable collapsible_headings/main --system ;
 sudo -H python3 -m jupyter nbextension enable freeze/main --system ;
 sudo -H python3 -m jupyter nbextension enable spellchecker/main --system ;
+sudo -H python3 -m pip install spylon_kernel
+sudo -H python3 -m spylon_kernel install
+
+# Jupyter notebook almond kernel
+cd /local
+curl -Lo coursier https://git.io/coursier-cli
+chmod +x coursier
+sudo ./coursier launch --fork almond:0.11.1 --scala 2.12 -- --install
+
 HASHED_PASSWORD=$(python3 -c "from notebook.auth import passwd; print(passwd('$JUPYTER_PASSWORD'))");
 echo "c.NotebookApp.password = u'$HASHED_PASSWORD'" >~/.jupyter/jupyter_notebook_config.py;
 echo "c.NotebookApp.open_browser = False" >>~/.jupyter/jupyter_notebook_config.py;
@@ -46,18 +55,20 @@ yarn theia download:plugins
 mkdir $HOME/.theia
 cd $CUR_DIR
 cp settings.json $HOME/.theia/ 
+sudo mkdir /.metals
+sudo chown $PROJECT_USER /.metals
 
 # DGL setup
 cd /local
 python3 -m venv --system-site-packages env_dgl
-sudo env_dgl/bin/python3 -m ipykernel install --name=env_dgl
+sudo $DGL_PY -m ipykernel install --name=env_dgl
 
-env_dgl/bin/python3 -m pip install torch==1.7.1 torchvision==0.8.2 torchaudio==0.7.2 ogb
+$DGL_PY -m pip install torch==1.7.1 torchvision==0.8.2 torchaudio==0.7.2 ogb
 
 if ( [[ $GPU_ENABLED -eq 1 ]] ); then
-    env_dgl/bin/python3 -m pip install dgl-cu110==0.7.1 -f https://data.dgl.ai/wheels/repo.html
+    $DGL_PY -m pip install dgl-cu110==0.7.1 -f https://data.dgl.ai/wheels/repo.html
 else
-    env_dgl/bin/python3 -m pip install dgl -f https://data.dgl.ai/wheels/repo.html
+    $DGL_PY -m pip install dgl -f https://data.dgl.ai/wheels/repo.html
 fi
 
 # tigergraph stuff
@@ -67,10 +78,9 @@ mkdir -p $TIGER_HOME/data
 mkdir -p $TIGER_HOME/log
 mkdir -p $TIGER_HOME/tmp
 
-# Sdk and scala
-curl -s "https://get.sdkman.io" | bash
-source "/home/projectadmin/.sdkman/bin/sdkman-init.sh"
-sdk install scala 2.12.15
+
+
+
 
 # Hadoop
 cd /local
@@ -97,9 +107,11 @@ source ~/.bashrc
 cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh;
 
 cp $ALL_HOSTS_DIR $SPARK_HOME/conf/workers
-echo "export PYSPARK_PYTHON=$DGL_PY/bin/python3" | tee -a $SPARK_HOME/conf/spark-env.sh
+echo "export PYSPARK_PYTHON=$DGL_PY" | tee -a $SPARK_HOME/conf/spark-env.sh
 echo "export SPARK_MASTER_HOST=master" | tee -a $SPARK_HOME/conf/spark-env.sh
 echo "export SPARK_LOCAL_DIRS=$SPARK_LOCAL_DIRS" | tee -a $SPARK_HOME/conf/spark-env.sh
+echo "export SPARK_LOCAL_IP=$WORKER_NAME" | tee -a $SPARK_HOME/conf/spark-env.sh
+
 
 
 # Giraph
@@ -118,19 +130,32 @@ cp $GIRAPH_HOME/giraph-core/target/giraph-1.3.0-SNAPSHOT-for-hadoop-2.7.2-jar-wi
 
 export GUAVA_JAR=$GIRAPH_HOME/giraph-dist/target/giraph-1.3.0-SNAPSHOT-for-hadoop-2.7.2-bin/giraph-1.3.0-SNAPSHOT-for-hadoop-2.7.2/lib/guava-21.0.jar
 
-rm -rf $HADOOP_HOME/share/hadoop/hdfs/lib/guava-11.0.2.jar
-rm -rf $HADOOP_HOME/share/hadoop/tools/lib/guava-11.0.2.jar
-rm -rf $HADOOP_HOME/share/hadoop/httpfs/tomcat/webapps/webhdfs/WEB-INF/lib/guava-11.0.2.jar
-rm -rf $HADOOP_HOME/share/hadoop/yarn/lib/guava-11.0.2.jar
-rm -rf $HADOOP_HOME/share/hadoop/common/lib/guava-11.0.2.jar
+
+# There are problems on guava, would break HDFS
+# rm -rf $HADOOP_HOME/share/hadoop/hdfs/lib/guava-11.0.2.jar
+# rm -rf $HADOOP_HOME/share/hadoop/tools/lib/guava-11.0.2.jar
+# rm -rf $HADOOP_HOME/share/hadoop/httpfs/tomcat/webapps/webhdfs/WEB-INF/lib/guava-11.0.2.jar
+# rm -rf $HADOOP_HOME/share/hadoop/yarn/lib/guava-11.0.2.jar
+# rm -rf $HADOOP_HOME/share/hadoop/common/lib/guava-11.0.2.jar
 
 
-cp $GUAVA_JAR $HADOOP_HOME/share/hadoop/hdfs/lib/
-cp $GUAVA_JAR $HADOOP_HOME/share/hadoop/tools/lib/
-cp $GUAVA_JAR $HADOOP_HOME/share/hadoop/httpfs/tomcat/webapps/webhdfs/WEB-INF/lib/
-cp $GUAVA_JAR $HADOOP_HOME/share/hadoop/yarn/lib/
-cp $GUAVA_JAR $HADOOP_HOME/share/hadoop/common/lib/
+# cp $GUAVA_JAR $HADOOP_HOME/share/hadoop/hdfs/lib/
+# cp $GUAVA_JAR $HADOOP_HOME/share/hadoop/tools/lib/
+# cp $GUAVA_JAR $HADOOP_HOME/share/hadoop/httpfs/tomcat/webapps/webhdfs/WEB-INF/lib/
+# cp $GUAVA_JAR $HADOOP_HOME/share/hadoop/yarn/lib/
+# cp $GUAVA_JAR $HADOOP_HOME/share/hadoop/common/lib/
 
+
+
+# Sdk and scala
+curl -s "https://get.sdkman.io" | bash
+source "/home/projectadmin/.sdkman/bin/sdkman-init.sh"
+sdk install scala 2.12.15
+sdk install sbt
+
+
+# change hostnames
+sudo hostname $WORKER_NAME
 
 
 

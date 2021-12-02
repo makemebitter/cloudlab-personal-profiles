@@ -6,6 +6,9 @@ sudo /etc/init.d/nfs-kernel-server restart
 mkdir $NFS_DIR/ssd
 mkdir $SSD_DIR/nfs
 migrate_a2b $NFS_DIR/ssd $SSD_DIR/nfs
+mkdir $NFS_DIR/jars
+wget https://repo1.maven.org/maven2/sh/almond/spark-stubs_30_2.12/0.11.0/spark-stubs_30_2.12-0.11.0.jar -O $NFS_DIR/jars/spark-stubs_30_2.12-0.11.0.jar
+
 cp $ALL_HOSTS_DIR $NFS_DIR/
 export GIT_SSH_COMMAND="ssh -i /home/$PROJECT_USER/.ssh/prj_key"
 
@@ -33,6 +36,9 @@ python3 /local/repository/tiger_config_gen.py --input $(pwd)/install_conf.json -
 sudo ./install.sh -n
 source ~/.bashrc
 $TIGER_HOME/app/cmd/gadmin stop all -y
+
+# HDFS
+$HADOOP_HOME/bin/hdfs namenode -format "spark_cluster"
 
 
 
