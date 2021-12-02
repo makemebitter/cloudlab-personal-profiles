@@ -47,6 +47,7 @@ mkdir /local/theia
 # wget https://raw.githubusercontent.com/theia-ide/theia-apps/a83be54ff44f087c87d8652f05ec73538ea055f7/theia-python-docker/latest.package.json -O /local/theia/package.json
 # wget https://raw.githubusercontent.com/theia-ide/theia-apps/master/theia-python-docker/latest.package.json -O /local/theia/package.json
 
+cd $BOOTSTRAP_ROOT
 cp latest.package.json /local/theia/package.json
 cd /local/theia
 yarn --cache-folder ./ycache && rm -rf ./ycache && \
