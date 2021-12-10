@@ -43,9 +43,9 @@ elif [[ "$duty" = "s" ]]; then
   sudo -H -u $PROJECT_USER bash worker.sh
 fi
 # -----------------------------------------------------------------------------
+sudo -H -u $PROJECT_USER bash sync.sh
 
 echo "Bootstraping complete, rebooting..."
-touch /bootstrap/BOOTSTRAP_DONE
 sudo shutdown -r now
 
 

@@ -64,6 +64,31 @@ wait_workers (){
     # --------------------------------------------------------------------------
 }
 
+sync_barrier (){
+    touch $TAG_PATH
+    while true; do
+        readarray -t hosts < $ALL_HOSTS_DIR
+        echo "Checking if all hosts finished"
+        all_done=true
+        for host in "${hosts[@]}"; do
+            if ssh -o StrictHostKeychecking=no $host stat $TAG_PATH \> /dev/null 2\>\&1; then
+                echo "$host finished"
+            else
+                echo "$host hasn't finished yet"
+                all_done=false
+            fi
+        done
+        
+
+        if [ "$all_done" = true ] ; then
+            break
+        else
+            echo "WAITING"
+            sleep 5s
+        fi
+    done
+}
+
 install_apt (){
     curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
