@@ -8,3 +8,6 @@ if [[ "$WORKER_NAME" = "master" ]]; then
 	$HADOOP_HOME/sbin/start-all.sh
 	$SPARK_HOME/sbin/start-all.sh
 fi
+
+# backup logs
+# gdrive upload -r -p 1JKqLPK6K_gqxRBp4LAHBx-uW7hmxbVpi /mnt/nfs/logs
