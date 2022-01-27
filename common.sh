@@ -13,6 +13,7 @@ git config --global user.email "yuz870@eng.ucsd.edu"
 git config --global user.name "Yuhao Zhang"
 
 # python
+sudo -H $SYS_PY -m pip install pip --upgrade
 sudo -H $SYS_PY -m pip install -r requirements_master.txt
 # Jupyter extension configs
 mkdir -p ~/.jupyter;
