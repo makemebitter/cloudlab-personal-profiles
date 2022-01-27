@@ -13,18 +13,18 @@ git config --global user.email "yuz870@eng.ucsd.edu"
 git config --global user.name "Yuhao Zhang"
 
 # python
-sudo -H python3 -m pip install -r requirements_master.txt
+sudo -H $SYS_PY -m pip install -r requirements_master.txt
 # Jupyter extension configs
 mkdir -p ~/.jupyter;
-sudo -H python3 -m jupyter contrib nbextension install --system ;
-sudo -H python3 -m jupyter nbextensions_configurator enable --system ;
-sudo -H python3 -m jupyter nbextension enable code_prettify/code_prettify --system ;
-sudo -H python3 -m jupyter nbextension enable execute_time/ExecuteTime --system ;
-sudo -H python3 -m jupyter nbextension enable collapsible_headings/main --system ;
-sudo -H python3 -m jupyter nbextension enable freeze/main --system ;
-sudo -H python3 -m jupyter nbextension enable spellchecker/main --system ;
-sudo -H python3 -m pip install spylon_kernel
-sudo -H python3 -m spylon_kernel install
+sudo -H $SYS_PY -m jupyter contrib nbextension install --system ;
+sudo -H $SYS_PY -m jupyter nbextensions_configurator enable --system ;
+sudo -H $SYS_PY -m jupyter nbextension enable code_prettify/code_prettify --system ;
+sudo -H $SYS_PY -m jupyter nbextension enable execute_time/ExecuteTime --system ;
+sudo -H $SYS_PY -m jupyter nbextension enable collapsible_headings/main --system ;
+sudo -H $SYS_PY -m jupyter nbextension enable freeze/main --system ;
+sudo -H $SYS_PY -m jupyter nbextension enable spellchecker/main --system ;
+sudo -H $SYS_PY -m pip install spylon_kernel
+sudo -H $SYS_PY -m spylon_kernel install
 
 # Jupyter notebook almond kernel
 cd /local
@@ -32,7 +32,7 @@ curl -Lo coursier https://git.io/coursier-cli
 chmod +x coursier
 sudo ./coursier launch --fork almond:0.11.1 --scala 2.12 -- --install
 
-HASHED_PASSWORD=$(python3 -c "from notebook.auth import passwd; print(passwd('$JUPYTER_PASSWORD'))");
+HASHED_PASSWORD=$($SYS_PY -c "from notebook.auth import passwd; print(passwd('$JUPYTER_PASSWORD'))");
 echo "c.NotebookApp.password = u'$HASHED_PASSWORD'" >~/.jupyter/jupyter_notebook_config.py;
 echo "c.NotebookApp.open_browser = False" >>~/.jupyter/jupyter_notebook_config.py;
 
@@ -61,7 +61,7 @@ sudo chown $PROJECT_USER /.metals
 
 # DGL setup
 cd /local
-python3 -m venv --system-site-packages env_dgl
+$SYS_PY -m venv --system-site-packages env_dgl
 sudo $DGL_PY -m ipykernel install --name=env_dgl
 
 $DGL_PY -m pip install torch==1.7.1 torchvision==0.8.2 torchaudio==0.7.2 ogb
