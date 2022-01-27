@@ -24,8 +24,8 @@ sudo -H $SYS_PY -m jupyter nbextension enable execute_time/ExecuteTime --system 
 sudo -H $SYS_PY -m jupyter nbextension enable collapsible_headings/main --system ;
 sudo -H $SYS_PY -m jupyter nbextension enable freeze/main --system ;
 sudo -H $SYS_PY -m jupyter nbextension enable spellchecker/main --system ;
-sudo -H $SYS_PY -m pip install spylon_kernel
-sudo -H $SYS_PY -m spylon_kernel install
+# sudo -H $SYS_PY -m pip install spylon_kernel
+# sudo -H $SYS_PY -m spylon_kernel install
 
 # Jupyter notebook almond kernel
 cd /local
