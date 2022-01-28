@@ -64,14 +64,20 @@ wait_workers (){
     # --------------------------------------------------------------------------
 }
 
+restart_all_workers (){
+    set +e
+    ssh_arg="-i $SSH_KEY_FILE"
+    PARALLEL_SSH="parallel-ssh -i -h $HOSTS_DIR -t 0 -O StrictHostKeyChecking=no -x \"${ssh_arg}\""
+    eval "$PARALLEL_SSH 'sudo shutdown -r now'"
+}
+
 sync_barrier (){
-    touch $TAG_PATH
+    readarray -t hosts < $ALL_HOSTS_DIR
     while true; do
-        readarray -t hosts < $ALL_HOSTS_DIR
         echo "Checking if all hosts finished"
         all_done=true
         for host in "${hosts[@]}"; do
-            if ssh -o StrictHostKeychecking=no $host stat $TAG_PATH \> /dev/null 2\>\&1; then
+            if ssh -i $SSH_KEY_FILE -o StrictHostKeychecking=no $host stat $TAG_PATH \> /dev/null 2\>\&1; then
                 echo "$host finished"
             else
                 echo "$host hasn't finished yet"

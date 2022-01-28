@@ -43,10 +43,14 @@ elif [[ "$duty" = "s" ]]; then
   sudo -H -u $PROJECT_USER bash worker.sh
 fi
 # -----------------------------------------------------------------------------
-sudo -H -u $PROJECT_USER bash sync.sh
+touch $TAG_PATH
+echo "Bootstraping complete, rebooting ..."
 
-echo "Bootstraping complete, rebooting..."
-sudo shutdown -r now
+if [[ "$duty" = "m" ]]; then
+# Master control reboot
+    sudo -H -u $PROJECT_USER bash sync_and_reboot.sh
+fi
+
 
 
 
