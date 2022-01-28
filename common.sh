@@ -101,7 +101,7 @@ cp $BOOTSTRAP_ROOT/mapred-site.xml $HADOOP_HOME/etc/hadoop/
 
 # Spark
 cd /local
-wget https://dlcdn.apache.org/spark/spark-3.2.0/spark-3.2.0-bin-hadoop2.7.tgz
+wget https://archive.apache.org/dist/spark/spark-3.2.0/spark-3.2.0-bin-hadoop2.7.tgz
 tar -xvf spark-3.2.0-bin-hadoop2.7.tgz
 mv spark-3.2.0-bin-hadoop2.7 $SPARK_HOME
 echo "export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin" | tee -a ~/.bashrc
