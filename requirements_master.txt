@@ -18,3 +18,5 @@ scikit-learn
 tqdm
 pyspark==3.2.0
 geni-lib
+rpyc
+pyzmq

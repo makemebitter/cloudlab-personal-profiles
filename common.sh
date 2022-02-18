@@ -65,12 +65,12 @@ cd /local
 $SYS_PY -m venv --system-site-packages env_dgl
 sudo $DGL_PY -m ipykernel install --name=env_dgl
 
-$DGL_PY -m pip install torch==1.7.1 torchvision==0.8.2 torchaudio==0.7.2 ogb
+$DGL_PY -m pip install torch==1.10.2 torchvision==0.11.3 torchaudio==0.10.2 ogb
 
 if ( [[ $GPU_ENABLED -eq 1 ]] ); then
     $DGL_PY -m pip install dgl-cu110==0.7.1 -f https://data.dgl.ai/wheels/repo.html
 else
-    $DGL_PY -m pip install dgl -f https://data.dgl.ai/wheels/repo.html
+    $DGL_PY -m pip install dgl==0.7.1 -f https://data.dgl.ai/wheels/repo.html
 fi
 
 # tigergraph stuff
