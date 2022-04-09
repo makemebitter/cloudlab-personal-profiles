@@ -113,6 +113,9 @@ install_apt (){
     export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
     add_one_global_var JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 
+    # blas
+    sudo update-alternatives --config libblas.so.3
+
 
 }
 

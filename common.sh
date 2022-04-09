@@ -113,6 +113,8 @@ echo "export PYSPARK_PYTHON=$DGL_PY" | tee -a $SPARK_HOME/conf/spark-env.sh
 echo "export SPARK_MASTER_HOST=master" | tee -a $SPARK_HOME/conf/spark-env.sh
 echo "export SPARK_LOCAL_DIRS=$SPARK_LOCAL_DIRS" | tee -a $SPARK_HOME/conf/spark-env.sh
 echo "export SPARK_LOCAL_IP=$WORKER_NAME" | tee -a $SPARK_HOME/conf/spark-env.sh
+# blas thread
+echo "export OPENBLAS_NUM_THREADS=1" | tee -a $SPARK_HOME/conf/spark-env.sh
 
 
 
