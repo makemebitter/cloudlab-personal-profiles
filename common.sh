@@ -115,6 +115,8 @@ echo "export SPARK_LOCAL_DIRS=$SPARK_LOCAL_DIRS" | tee -a $SPARK_HOME/conf/spark
 echo "export SPARK_LOCAL_IP=$WORKER_NAME" | tee -a $SPARK_HOME/conf/spark-env.sh
 # blas thread
 echo "export OPENBLAS_NUM_THREADS=1" | tee -a $SPARK_HOME/conf/spark-env.sh
+echo "export MKL_NUM_THREADS=1" | tee -a $SPARK_HOME/conf/spark-env.sh
+
 
 
 
