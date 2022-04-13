@@ -96,8 +96,10 @@ sync_barrier (){
 }
 
 install_apt (){
+    export DEBIAN_FRONTEND=noninteractive
     curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+    sudo add-apt-repository multiverse
     sudo apt-get update
     sudo apt-get install -y software-properties-common
     sudo add-apt-repository -y ppa:deadsnakes/ppa
@@ -117,13 +119,14 @@ install_apt (){
 
     # # blas
     # sudo update-alternatives --config libblas.so.3
-    install_mkl
+    # install_mkl
+    sudo apt-get install -y intel-mkl-full
 
 
 }
 
 install_mkl (){
-    # intel mkl
+    # intel mkl on ubuntu 18.04
     # download the key to system keyring
     wget -O- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB \
     | gpg --dearmor | sudo tee /usr/share/keyrings/oneapi-archive-keyring.gpg > /dev/null
@@ -188,6 +191,9 @@ save_space (){
     # sudo mount -o bind ${MNT_ROOT}/var/ /var/
 
     space_saver "/var" "var"
+    sudo chown -R man: /var/cache/man/
+    sudo chmod -R 775 /var/cache/man/
+
 
     space_saver "/opt" "var"
 
