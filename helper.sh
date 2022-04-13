@@ -117,8 +117,21 @@ install_apt (){
 
     # # blas
     # sudo update-alternatives --config libblas.so.3
+    install_mkl
 
 
+}
+
+install_mkl (){
+    # intel mkl
+    # download the key to system keyring
+    wget -O- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB \
+    | gpg --dearmor | sudo tee /usr/share/keyrings/oneapi-archive-keyring.gpg > /dev/null
+
+    # add signed entry to apt sources and configure the APT client to use Intel repository:
+    echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
+    sudo apt-get update
+    sudo apt-get install -y intel-basekit
 }
 
 add_firewall (){
@@ -175,6 +188,8 @@ save_space (){
     # sudo mount -o bind ${MNT_ROOT}/var/ /var/
 
     space_saver "/var" "var"
+
+    space_saver "/opt" "var"
 
     # sudo mkdir ${MNT_ROOT}/var.lib
     # sudo rsync -avr /var/lib/ ${MNT_ROOT}/var.lib/

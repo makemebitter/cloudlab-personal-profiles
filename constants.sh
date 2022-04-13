@@ -18,3 +18,4 @@ SYS_PY=python3.8
 DGL_PY=/local/env_dgl/bin/python3
 SPARK_LOCAL_DIRS=/mnt/ssd/tmp
 TAG_PATH=/local/BOOTSTRAP_DONE
+
