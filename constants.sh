@@ -5,8 +5,8 @@ NFS_DIR=/mnt/nfs
 PROJECT_USER=projectadmin
 SSH_KEY_FILE=/local/key
 THEIA_DEFAULT_PLUGINS=local-dir:/local/theia/plugins
-NCCL_SOCKET_IFNAME='enp94s0f0'
-GLOO_SOCKET_IFNAME='enp94s0f0'
+NCCL_SOCKET_IFNAME='ens2f0'
+GLOO_SOCKET_IFNAME='ens2f0'
 TIGER_HOME='/mnt/tigergraph/tigergraph'
 HADOOP_HOME='/local/hadoop'
 HADOOP_PREFIX='/local/hadoop'
@@ -19,4 +19,5 @@ DGL_PY=/local/env_dgl/bin/python3
 SPARK_LOCAL_DIRS=/mnt/ssd/tmp
 TAG_PATH=/local/BOOTSTRAP_DONE
 MKL_THREADING_LAYER=GNU
+NVBLAS_CONFIG_FILE=/mnt/nfs/gsys/nvblas.conf
 

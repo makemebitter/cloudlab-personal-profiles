@@ -105,6 +105,8 @@ install_apt (){
     sudo add-apt-repository -y ppa:deadsnakes/ppa
 
     sudo apt-get install -y $(cat pkglist)
+    # libatlas-base-dev
+    # libopenblas-base
 
     # setup sysstat
     sudo sed -i 's/"false"/"true"/g' /etc/default/sysstat
@@ -115,12 +117,33 @@ install_apt (){
     export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
     add_one_global_var JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 
+
+
     
 
     # # blas
     # sudo update-alternatives --config libblas.so.3
     # install_mkl
     sudo apt-get install -y intel-mkl-full
+    sudo ln -sf /usr/lib/x86_64-linux-gnu/mkl/libmkl_rt.so /usr/local/lib/liblapack.so.3
+    sudo ln -sf /usr/lib/x86_64-linux-gnu/mkl/libmkl_rt.so /usr/local/lib/libblas.so.3
+    sudo update-alternatives --set libblas.so.3-x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/libmkl_rt.so
+    sudo update-alternatives --set liblapack.so.3-x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/libmkl_rt.so
+
+    sudo update-alternatives --install /usr/lib/liblapack.so.3 liblapack.so.3 /usr/lib/x86_64-linux-gnu/libmkl_rt.so 1000
+    sudo update-alternatives --install /usr/lib/liblapack.so liblapack.so /usr/lib/x86_64-linux-gnu/libmkl_rt.so 1000
+    sudo update-alternatives --install /usr/lib/libblas.so.3 libblas.so.3 /usr/lib/x86_64-linux-gnu/libmkl_rt.so 1000
+    sudo update-alternatives --install /usr/lib/libblas.so libblas.so /usr/lib/x86_64-linux-gnu/libmkl_rt.so 1000
+
+
+    sudo update-alternatives --install /usr/lib/libblas.so.3 libblas.so.3 /usr/local/cuda-11.0/targets/x86_64-linux/lib/libnvblas.so 1
+    sudo update-alternatives --install /usr/lib/libblas.so libblas.so /usr/local/cuda-11.0/targets/x86_64-linux/lib/libnvblas.so 1
+
+    export LD_LIBRARY_PATH="/usr/local/cuda-11.0/targets/x86_64-linux/lib:/usr/lib/x86_64-linux-gnu/mkl"
+
+    echo "/usr/lib/x86_64-linux-gnu/mkl" | sudo tee -a /etc/ld.so.conf 
+    echo "/usr/local/cuda-11.0/targets/x86_64-linux/lib" | sudo tee -a /etc/ld.so.conf 
+    sudo ldconfig
 
 
 }
@@ -144,7 +167,7 @@ add_firewall (){
     sudo ufw allow from 10.10.1.0/24
     sudo ufw enable
     sudo systemctl enable ufw
-    echo "AllowUsers      yhzhang $PROJECT_USER" | sudo tee -a /etc/ssh/sshd_config
+    # echo "AllowUsers      yhzhang $PROJECT_USER" | sudo tee -a /etc/ssh/sshd_config
     sudo systemctl restart sshd 
 }
 
@@ -324,6 +347,7 @@ install_cuda (){
 
     # Save space
     space_saver "/usr/local/cuda-11.0" "usr.local.cuda"
+
 
 }
 
