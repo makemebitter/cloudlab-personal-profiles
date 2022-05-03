@@ -136,8 +136,8 @@ install_apt (){
     sudo update-alternatives --install /usr/lib/libblas.so libblas.so /usr/lib/x86_64-linux-gnu/libmkl_rt.so 1000
 
 
-    sudo update-alternatives --install /usr/lib/libblas.so.3 libblas.so.3 /usr/local/cuda-11.0/targets/x86_64-linux/lib/libnvblas.so 1
-    sudo update-alternatives --install /usr/lib/libblas.so libblas.so /usr/local/cuda-11.0/targets/x86_64-linux/lib/libnvblas.so 1
+    # sudo update-alternatives --install /usr/lib/libblas.so.3 libblas.so.3 /usr/local/cuda-11.0/targets/x86_64-linux/lib/libnvblas.so 1
+    # sudo update-alternatives --install /usr/lib/libblas.so libblas.so /usr/local/cuda-11.0/targets/x86_64-linux/lib/libnvblas.so 1
 
     export LD_LIBRARY_PATH="/usr/local/cuda-11.0/targets/x86_64-linux/lib:/usr/lib/x86_64-linux-gnu/mkl"
 
