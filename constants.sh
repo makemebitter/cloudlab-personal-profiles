@@ -20,4 +20,3 @@ SPARK_LOCAL_DIRS=/mnt/ssd/tmp
 TAG_PATH=/local/BOOTSTRAP_DONE
 MKL_THREADING_LAYER=GNU
 NVBLAS_CONFIG_FILE=/mnt/nfs/gsys/nvblas.conf
-
