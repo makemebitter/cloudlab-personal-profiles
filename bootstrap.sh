@@ -49,6 +49,7 @@ echo "Bootstraping complete, rebooting ..."
 if [[ "$duty" = "m" ]]; then
 # Master control reboot
     sudo -H -u $PROJECT_USER bash sync_and_reboot.sh
+    
 fi
 
 
