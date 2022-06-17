@@ -1,5 +1,6 @@
 build-essential
 apt-transport-https
+apt-show-versions
 ca-certificates
 curl
 gnupg-agent

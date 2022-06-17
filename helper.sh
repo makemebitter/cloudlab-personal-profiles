@@ -218,7 +218,7 @@ save_space (){
     sudo chmod -R 775 /var/cache/man/
 
 
-    space_saver "/opt" "var"
+    space_saver "/opt" "opt"
 
     # sudo mkdir ${MNT_ROOT}/var.lib
     # sudo rsync -avr /var/lib/ ${MNT_ROOT}/var.lib/
@@ -348,8 +348,16 @@ install_cuda (){
         libnvinfer-dev=8.0.0-1+cuda11.0 \
         libnvinfer-plugin8=8.0.0-1+cuda11.0
 
+    # wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb
+    # sudo dpkg -i cuda-keyring_1.0-1_all.deb
+    # sudo apt-get update
+
+
+    sudo apt-get install -y libnccl2=2.12.12-1+cuda11.0 libnccl-dev=2.12.12-1+cuda11.0
+
     # Save space
     space_saver "/usr/local/cuda-11.0" "usr.local.cuda"
+
 
 
 }

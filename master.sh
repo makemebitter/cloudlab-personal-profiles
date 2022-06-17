@@ -15,6 +15,18 @@ export GIT_SSH_COMMAND="ssh -i /home/$PROJECT_USER/.ssh/prj_key"
 git clone git@github.com:makemebitter/gsys.git $NFS_DIR/gsys
 
 git clone git@github.com:makemebitter/dgl.git $NFS_DIR/dgl
+
+git clone git@github.com:makemebitter/roc.git $NFS_DIR/roc
+
+git clone git@github.com:makemebitter/graph-learn.git $NFS_DIR/aligraph
+
+cd $NFS_DIR/aligraph
+git submodule update --init
+make test
+make python PYTHON=$SYS_PY
+
+
+
 # cd /local/dgl
 # git reset --hard HEAD
 # git checkout a9c83bce15246c3e71e372e8128c7e345c136f36

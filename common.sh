@@ -11,6 +11,7 @@ echo "    StrictHostKeyChecking no" | tee -a ~/.ssh/config
 # Git user and email
 git config --global user.email "yuz870@eng.ucsd.edu"
 git config --global user.name "Yuhao Zhang"
+git config --global core.editor "vim"
 
 # python
 sudo -H $SYS_PY -m pip install pip --upgrade
@@ -63,15 +64,25 @@ sudo chown $PROJECT_USER /.metals
 # DGL setup
 cd /local
 $SYS_PY -m venv --system-site-packages env_dgl
+$DGL_PY -m pip install --upgrade pip
 sudo $DGL_PY -m ipykernel install --name=env_dgl
 
 $DGL_PY -m pip install torch==1.10.2 torchvision==0.11.3 torchaudio==0.10.2 ogb
+
+$DGL_PY -m pip install torch-scatter -f https://data.pyg.org/whl/torch-1.10.2+cu102.html
+$DGL_PY -m pip install torch-sparse -f https://data.pyg.org/whl/torch-1.10.2+cu102.html
+$DGL_PY -m pip install torch-geometric
 
 if ( [[ $GPU_ENABLED -eq 1 ]] ); then
     $DGL_PY -m pip install dgl-cu110==0.7.1 -f https://data.dgl.ai/wheels/repo.html
 else
     $DGL_PY -m pip install dgl==0.7.1 -f https://data.dgl.ai/wheels/repo.html
 fi
+
+
+# Aligraph setup
+cd $NFS_DIR/aligraph/dist
+$DGL_PY -m pip install graph_learn-1.0.1-cp38-cp38-linux_x86_64.whl
 
 # tigergraph stuff
 
