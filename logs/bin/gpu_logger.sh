@@ -11,7 +11,7 @@ LOG_FILENAME="$LOG_DIR/gpu_utilization_$WORKER_NAME.log"
 while true;
 do  
     datestr=`date "+%Y-%m-%d %H:%M:%S"`
-    gpu_uti=$(nvidia-smi --query-gpu=utilization.gpu,utilization.memory,power.draw --format=csv,noheader)
+    gpu_uti=$(nvidia-smi --query-gpu=utilization.gpu,utilization.memory,power.draw,memory.used --format=csv,noheader)
     echo -e "${datestr}\n${gpu_uti}" >> $LOG_FILENAME
     sleep 1;
 done

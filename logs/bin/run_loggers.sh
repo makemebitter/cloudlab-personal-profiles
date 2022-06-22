@@ -8,7 +8,7 @@ DISK_LOG_DIR=$NFS_DIR/logs/${datestr}/disk_logs
 CPU_LOG_DIR=$NFS_DIR/logs/${datestr}/cpu_logs
 GPU_LOG_DIR=$NFS_DIR/logs/${datestr}/gpu_logs
 __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-nohup bash ${__dir}/network_logger.sh $NETWORK_LOG_DIR eno1 enp94s0f0 &
+nohup bash ${__dir}/network_logger.sh $NETWORK_LOG_DIR eno1 ens2f0 &
 nohup bash ${__dir}/disk_logger.sh $DISK_LOG_DIR &
 nohup bash ${__dir}/cpu_logger.sh $CPU_LOG_DIR &
 
