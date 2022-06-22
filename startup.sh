@@ -5,6 +5,10 @@ nohup yarn --cwd /local/theia theia start --hostname=127.0.0.1 > /local/logs/the
 # install the system
 cd $NFS_DIR/gsys
 $DGL_PY -m pip install -e .
+
+cd $NFS_DIR/aligraph/dist
+$DGL_PY -m pip install graph_learn-1.0.1-cp38-cp38-linux_x86_64.whl
+
 cd logs/bin
 . run_loggers.sh
 if [[ "$WORKER_NAME" = "master" ]]; then
