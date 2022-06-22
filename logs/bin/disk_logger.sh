@@ -6,7 +6,7 @@ else
     LOG_DIR="."
 fi
 LOG_FILENAME="$LOG_DIR/disk_$WORKER_NAME.log"
-echo '' > $LOG_FILENAME
+echo -n '' > $LOG_FILENAME
 while true;
 do
     datestr=`date "+%Y-%m-%d %H:%M:%S"`

@@ -7,6 +7,7 @@ else
 fi
 
 LOG_FILENAME="$LOG_DIR/cpu_utilization_$WORKER_NAME.log"
+echo -n '' > $LOG_FILENAME
 
 while true;
 do

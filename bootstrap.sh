@@ -43,7 +43,7 @@ elif [[ "$duty" = "s" ]]; then
   sudo -H -u $PROJECT_USER bash worker.sh
 fi
 # -----------------------------------------------------------------------------
-sudo -H -u $PROJECT_USER bash common_post.sh
+
 # -----------------------------------------------------------------------------
 
 touch $TAG_PATH

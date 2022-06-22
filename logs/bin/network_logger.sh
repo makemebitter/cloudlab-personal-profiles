@@ -8,7 +8,7 @@ fi
 CONTROL_IFNAME="$2"
 EXPERIMENT_IFNAME="$3"
 LOG_FILENAME="$LOG_DIR/network_$WORKER_NAME.log"
-echo '' > $LOG_FILENAME
+echo -n '' > $LOG_FILENAME
 while true;
 do
     datestr=`date "+%Y-%m-%d %H:%M:%S"`
