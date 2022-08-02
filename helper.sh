@@ -334,29 +334,29 @@ install_cuda (){
     sudo apt-get update
 
 
-    wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/libnvinfer8_8.0.0-1+cuda11.0_amd64.deb
-    sudo apt-get install -y ./libnvinfer8_8.0.0-1+cuda11.0_amd64.deb
+    wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/libnvinfer8_8.0.0-1+cuda11.3_amd64.deb
+    sudo apt-get install -y ./libnvinfer8_8.0.0-1+cuda11.3_amd64.deb
     sudo apt-get update
 
     # Install development and runtime libraries (~4GB)
     sudo apt-get install -y --no-install-recommends --allow-downgrades \
         cuda-11-0 \
-        libcudnn8=8.0.5.39-1+cuda11.0  \
-        libcudnn8-dev=8.0.5.39-1+cuda11.0
+        libcudnn8=8.0.5.39-1+cuda11.3  \
+        libcudnn8-dev=8.0.5.39-1+cuda11.3
 
-    sudo apt-get install -y --no-install-recommends libnvinfer8=8.0.0-1+cuda11.0 \
-        libnvinfer-dev=8.0.0-1+cuda11.0 \
-        libnvinfer-plugin8=8.0.0-1+cuda11.0
+    sudo apt-get install -y --no-install-recommends libnvinfer8=8.0.0-1+cuda11.3 \
+        libnvinfer-dev=8.0.0-1+cuda11.3 \
+        libnvinfer-plugin8=8.0.0-1+cuda11.3
 
     # wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb
     # sudo dpkg -i cuda-keyring_1.0-1_all.deb
     # sudo apt-get update
 
 
-    sudo apt-get install -y libnccl2=2.12.12-1+cuda11.0 libnccl-dev=2.12.12-1+cuda11.0
+    sudo apt-get install -y libnccl2=2.12.12-1+cuda11.3 libnccl-dev=2.12.12-1+cuda11.3
 
     # Save space
-    space_saver "/usr/local/cuda-11.0" "usr.local.cuda"
+    space_saver "/usr/local/cuda-11.3" "usr.local.cuda"
 
 
 
