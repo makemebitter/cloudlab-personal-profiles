@@ -340,9 +340,11 @@ install_cuda (){
 
     # Install development and runtime libraries (~4GB)
     sudo apt-get install -y --no-install-recommends --allow-downgrades \
-        cuda-11-0 \
-        libcudnn8=8.0.5.39-1+cuda11.3  \
-        libcudnn8-dev=8.0.5.39-1+cuda11.3
+        cuda-11-3 \
+        libcudnn8=8.2.1.32-1+cuda11.3  \
+        libcudnn8-dev=8.2.1.32-1+cuda11.3
+
+
 
     sudo apt-get install -y --no-install-recommends libnvinfer8=8.0.0-1+cuda11.3 \
         libnvinfer-dev=8.0.0-1+cuda11.3 \
@@ -352,8 +354,7 @@ install_cuda (){
     # sudo dpkg -i cuda-keyring_1.0-1_all.deb
     # sudo apt-get update
 
-
-    sudo apt-get install -y libnccl2=2.12.12-1+cuda11.3 libnccl-dev=2.12.12-1+cuda11.3
+    sudo apt-get install -y libnccl2=2.9.6-1+cuda11.3 libnccl-dev=2.9.6-1+cuda11.3
 
     # Save space
     space_saver "/usr/local/cuda-11.3" "usr.local.cuda"

@@ -71,6 +71,7 @@ $DGL_PY -m pip install torch==1.10.2 torchvision==0.11.3 torchaudio==0.10.2 cuda
 $DGL_PY -m pip install ogb
 $DGL_PY -m pip install torch-scatter -f https://data.pyg.org/whl/torch-1.10.2+cu113.html
 $DGL_PY -m pip install torch-sparse -f https://data.pyg.org/whl/torch-1.10.2+cu113.html
+# $DGL_PY -m pip install torch-sparse -f https://data.pyg.org/whl/torch-1.10.2+cpu.html
 $DGL_PY -m pip install torch-geometric
 $DGL_PY -m pip install nvidia-pyindex
 # $DGL_PY -m pip install nvidia-tensorflow[horovod]==1.15.4+nv20.12
