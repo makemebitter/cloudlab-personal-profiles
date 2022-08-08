@@ -174,8 +174,8 @@ add_firewall (){
 migrate_a2b (){
     dir_a="$1"
     dir_b="$2"
-    sudo mkdir -p $dir_b
-    sudo rsync -avr $dir_a/ $dir_b/
+    # sudo mkdir -p $dir_b
+    sudo rsync -avH $dir_a/ $dir_b
     sudo rm -rvf $dir_a/*
     sudo mount -o bind $dir_b/ $dir_a/
     echo "$dir_b/    $dir_a/    none    bind    0    0" | sudo tee -a /etc/fstab
@@ -214,11 +214,13 @@ save_space (){
     # sudo mount -o bind ${MNT_ROOT}/var/ /var/
 
     space_saver "/var" "var"
-    sudo chown -R man: /var/cache/man/
-    sudo chmod -R 775 /var/cache/man/
+    # sudo chown -R man: /var/cache/man/
+    # sudo chmod -R 775 /var/cache/man/
 
 
     space_saver "/opt" "opt"
+
+    space_saver "/usr/local" "usr.local"
 
     # sudo mkdir ${MNT_ROOT}/var.lib
     # sudo rsync -avr /var/lib/ ${MNT_ROOT}/var.lib/
@@ -313,7 +315,7 @@ install_cuda_1804 (){
         libcudnn8-dev=8.0.4.30-1+cuda11.0
 
     # Save space
-    space_saver "/usr/local/cuda-11.0" "usr.local.cuda"
+    # space_saver "/usr/local/cuda-11.0" "usr.local.cuda"
 
 }
 
@@ -357,7 +359,7 @@ install_cuda (){
     sudo apt-get install -y libnccl2=2.9.6-1+cuda11.3 libnccl-dev=2.9.6-1+cuda11.3
 
     # Save space
-    space_saver "/usr/local/cuda-11.3" "usr.local.cuda"
+    # space_saver "/usr/local/cuda-11.3" "usr.local.cuda"
 
 
 

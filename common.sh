@@ -67,7 +67,7 @@ $SYS_PY -m venv --system-site-packages env_dgl
 $DGL_PY -m pip install --upgrade pip
 sudo $DGL_PY -m ipykernel install --name=env_dgl
 
-$DGL_PY -m pip install torch==1.10.2 torchvision==0.11.3 torchaudio==0.10.2 cudatoolkit=11.3 --extra-index-url https://download.pytorch.org/whl/cu113
+sudo $DGL_PY -m pip install torch==1.10.2 torchvision==0.11.3 torchaudio==0.10.2 --extra-index-url https://download.pytorch.org/whl/cu113
 $DGL_PY -m pip install ogb
 $DGL_PY -m pip install torch-scatter -f https://data.pyg.org/whl/torch-1.10.2+cu113.html
 $DGL_PY -m pip install torch-sparse -f https://data.pyg.org/whl/torch-1.10.2+cu113.html
@@ -77,7 +77,7 @@ $DGL_PY -m pip install nvidia-pyindex
 # $DGL_PY -m pip install nvidia-tensorflow[horovod]==1.15.4+nv20.12
 # $DGL_PY -m pip install numpy==1.15.0
 
-
+# cudatoolkit==11.3 
 
 
 
