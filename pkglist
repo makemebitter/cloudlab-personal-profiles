@@ -37,3 +37,6 @@ automake
 libtool
 libssl-dev
 cmake
+libzmq3-dev
+pigz
+pv

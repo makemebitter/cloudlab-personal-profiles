@@ -214,8 +214,8 @@ save_space (){
     # sudo mount -o bind ${MNT_ROOT}/var/ /var/
 
     space_saver "/var" "var"
-    # sudo chown -R man: /var/cache/man/
-    # sudo chmod -R 775 /var/cache/man/
+    sudo chown -R man: /var/cache/man/
+    sudo chmod -R 775 /var/cache/man/
 
 
     space_saver "/opt" "opt"

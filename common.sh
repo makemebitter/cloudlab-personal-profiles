@@ -113,13 +113,14 @@ cp $BOOTSTRAP_ROOT/core-site.xml $HADOOP_HOME/etc/hadoop/
 cp $BOOTSTRAP_ROOT/yarn-site.xml $HADOOP_HOME/etc/hadoop/
 cp $BOOTSTRAP_ROOT/hdfs-site.xml $HADOOP_HOME/etc/hadoop/
 cp $BOOTSTRAP_ROOT/mapred-site.xml $HADOOP_HOME/etc/hadoop/
+source ~/.bashrc
 
 # Spark
 cd /local
 wget https://archive.apache.org/dist/spark/spark-3.2.0/spark-3.2.0-bin-hadoop2.7.tgz
 tar -xvf spark-3.2.0-bin-hadoop2.7.tgz
 mv spark-3.2.0-bin-hadoop2.7 $SPARK_HOME
-echo "export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin" | tee -a ~/.bashrc
+echo "export PATH=\"$PATH\":$SPARK_HOME/bin:$SPARK_HOME/sbin" | tee -a ~/.bashrc
 source ~/.bashrc
 cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh;
 
@@ -131,6 +132,9 @@ echo "export SPARK_LOCAL_IP=$WORKER_NAME" | tee -a $SPARK_HOME/conf/spark-env.sh
 # blas thread
 echo "export OPENBLAS_NUM_THREADS=1" | tee -a $SPARK_HOME/conf/spark-env.sh
 echo "export MKL_NUM_THREADS=1" | tee -a $SPARK_HOME/conf/spark-env.sh
+echo "export LD_LIBRARY_PATH=/usr/local/lib" | tee -a $SPARK_HOME/conf/spark-env.sh
+
+
 
 
 
@@ -148,6 +152,17 @@ cp $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop
 
 cp $GIRAPH_HOME/giraph-core/target/giraph-1.3.0-SNAPSHOT-for-hadoop-2.7.2-jar-with-dependencies.jar $HADOOP_HOME/share/hadoop/giraph/
 
+
+
+# jzmq
+cd /local
+git clone https://github.com/zeromq/jzmq.git
+cd jzmq/jzmq-jni
+./autogen.sh
+./configure
+sudo make install
+cd ..
+mvn install -Dgpg.skip=true -Dmaven.test.skip=true 
 
 # export GUAVA_JAR=$GIRAPH_HOME/giraph-dist/target/giraph-1.3.0-SNAPSHOT-for-hadoop-2.7.2-bin/giraph-1.3.0-SNAPSHOT-for-hadoop-2.7.2/lib/guava-21.0.jar
 
