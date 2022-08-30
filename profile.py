@@ -1,5 +1,7 @@
 """Spawn a cluster and setup the networking, personal scripts to setup
-various things"""
+various things
+Yuhao Zhang
+"""
 
 # Import the Portal object.
 import geni.portal as portal
