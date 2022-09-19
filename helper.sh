@@ -22,7 +22,7 @@ add_global_vars (){
     add_one_global_var "DUTY" $duty
     add_one_global_var "GPU_WORKERS" $GPU_WORKERS
     add_one_global_var "GPU_MASTER" $GPU_MASTER
-    if [ "$duty" = "m" ] then
+    if [ "$duty" = "m" ] ; then
         add_one_global_var "RANK_NUMBER" "0"
     else
         add_one_global_var "RANK_NUMBER" $((worker_number+1))
