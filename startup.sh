@@ -12,7 +12,7 @@ $DGL_PY -m pip install graph_learn-1.0.1-cp38-cp38-linux_x86_64.whl
 cd $NFS_DIR/light_dist_gnn/spmm_cpp/dist
 $DGL_PY -m pip install spmm_cpp-0.0.0-cp38-cp38-linux_x86_64.whl
 
-cd $NFS_DIR/gsys/logs/bin
+cd $BOOTSTRAP_ROOT/logs/bin
 . run_loggers.sh
 if [[ "$WORKER_NAME" = "master" ]]; then
 	$HADOOP_HOME/sbin/start-all.sh
