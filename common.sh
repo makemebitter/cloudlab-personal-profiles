@@ -74,7 +74,8 @@ $DGL_PY -m pip install torch-sparse -f https://data.pyg.org/whl/torch-1.10.2+cu1
 # $DGL_PY -m pip install torch-sparse -f https://data.pyg.org/whl/torch-1.10.2+cpu.html
 $DGL_PY -m pip install torch-geometric
 $DGL_PY -m pip install nvidia-pyindex
-# $DGL_PY -m pip install nvidia-tensorflow[horovod]==1.15.4+nv20.12
+# $DGL_PY -m pip install nvidia-tensorflow[horovod]==1.15.5+nv21.5
+# $DGL_PY -m pip install protobuf==3.20.*
 # $DGL_PY -m pip install numpy==1.15.0
 
 # cudatoolkit==11.3 

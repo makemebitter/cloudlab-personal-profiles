@@ -40,3 +40,4 @@ cmake
 libzmq3-dev
 pigz
 pv
+mlocate

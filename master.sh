@@ -20,6 +20,12 @@ git clone git@github.com:makemebitter/roc.git $NFS_DIR/roc
 
 git clone git@github.com:makemebitter/graph-learn.git $NFS_DIR/aligraph
 
+git clone git@github.com:makemebitter/light-dist-gnn.git $NFS_DIR/light_dist_gnn
+
+cd $NFS_DIR/light_dist_gnn/spmm_cpp
+$DGL_PY setup.py bdist_wheel 
+
+
 cd $NFS_DIR/aligraph
 git submodule update --init
 make test
