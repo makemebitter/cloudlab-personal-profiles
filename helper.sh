@@ -225,7 +225,7 @@ save_space (){
 
     space_saver "/opt" "opt"
 
-    # space_saver "/usr/local" "usr.local"
+    space_saver "/usr/local" "usr.local"
 
     # sudo mkdir ${MNT_ROOT}/var.lib
     # sudo rsync -avr /var/lib/ ${MNT_ROOT}/var.lib/
@@ -364,7 +364,7 @@ install_cuda (){
     sudo apt-get install -y libnccl2=2.9.6-1+cuda11.3 libnccl-dev=2.9.6-1+cuda11.3
 
     # Save space
-    space_saver "/usr/local/cuda-11.3" "usr.local.cuda"
+    # space_saver "/usr/local/cuda-11.3" "usr.local.cuda"
 
     # sudo ln -sfT /usr/local/cuda/cuda-11.3 /usr/local/cuda
 
