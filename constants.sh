@@ -21,3 +21,4 @@ TAG_PATH=/local/BOOTSTRAP_DONE
 MKL_THREADING_LAYER=GNU
 NVBLAS_CONFIG_FILE=/mnt/nfs/gsys/nvblas.conf
 LD_LIBRARY_PATH='/usr/local/lib:/usr/local/cuda-11.3/lib64'
+CUDA_HOME='/usr/local/cuda-11.3'

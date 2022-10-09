@@ -107,7 +107,7 @@ tar -xvf hadoop-2.7.2.tar.gz
 mv hadoop-2.7.2 $HADOOP_HOME
 cp $ALL_HOSTS_DIR $HADOOP_HOME/etc/hadoop/slaves
 echo "master" | tee $HADOOP_HOME/etc/hadoop/workers
-echo "export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin" | tee -a ~/.bashrc
+# echo "export PATH=\"$PATH\":$HADOOP_HOME/bin:$HADOOP_HOME/sbin" | tee -a ~/.bashrc
 source ~/.bashrc
 echo "export JAVA_HOME=$JAVA_HOME" | tee -a $HADOOP_HOME/etc/hadoop/hadoop-env.sh
 cp $BOOTSTRAP_ROOT/core-site.xml $HADOOP_HOME/etc/hadoop/
@@ -121,14 +121,14 @@ cd /local
 wget https://archive.apache.org/dist/spark/spark-3.2.0/spark-3.2.0-bin-hadoop2.7.tgz
 tar -xvf spark-3.2.0-bin-hadoop2.7.tgz
 mv spark-3.2.0-bin-hadoop2.7 $SPARK_HOME
-echo "export PATH=\"$PATH\":$SPARK_HOME/bin:$SPARK_HOME/sbin" | tee -a ~/.bashrc
+echo "export PATH=\"$PATH\":$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$SPARK_HOME/bin:$SPARK_HOME/sbin" | tee -a ~/.bashrc
 source ~/.bashrc
 cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh;
 
 cp $ALL_HOSTS_DIR $SPARK_HOME/conf/workers
 echo "export PYSPARK_PYTHON=$DGL_PY" | tee -a $SPARK_HOME/conf/spark-env.sh
 echo "export SPARK_MASTER_HOST=master" | tee -a $SPARK_HOME/conf/spark-env.sh
-echo "export SPARK_LOCAL_DIRS=$SPARK_LOCAL_DIRS" | tee -a $SPARK_HOME/conf/spark-env.sh
+echo "export SPARK_LOCAL_DIRS=$SPARK_LOCAL_DIRS,/mnt/tmp" | tee -a $SPARK_HOME/conf/spark-env.sh
 echo "export SPARK_LOCAL_IP=$WORKER_NAME" | tee -a $SPARK_HOME/conf/spark-env.sh
 # blas thread
 echo "export OPENBLAS_NUM_THREADS=1" | tee -a $SPARK_HOME/conf/spark-env.sh
