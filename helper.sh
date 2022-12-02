@@ -148,6 +148,7 @@ install_apt (){
 
     # echo "/usr/lib/x86_64-linux-gnu/mkl" | sudo tee -a /etc/ld.so.conf 
     # echo "/usr/local/cuda-11.0/targets/x86_64-linux/lib" | sudo tee -a /etc/ld.so.conf 
+    sudo apt-get install -y msttcorefonts -qq
     sudo ldconfig
 
 
