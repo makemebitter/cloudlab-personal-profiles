@@ -1,12 +1,12 @@
 <configuration>
     <property>
             <name>dfs.namenode.name.dir</name>
-            <value>/mnt/hdfs/nameNode</value>
+            <value>/mnt/ssd/hdfs/nameNode</value>
     </property>
 
     <property>
             <name>dfs.datanode.data.dir</name>
-            <value>/mnt/hdfs/dataNode</value>
+            <value>/mnt/ssd/hdfs/dataNode</value>
     </property>
     <property>
             <name>dfs.datanode.balance.max.concurrent.moves</name>
@@ -24,4 +24,9 @@
             <name>dfs.balancer.moverThreads</name>
             <value>200000</value>
     </property>
+    <property>
+            <name>dfs.datanode.balance.bandwidthPerSec</name>
+            <value>10000000000</value>
+    </property>
+
 </configuration>

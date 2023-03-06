@@ -1,0 +1,7 @@
+sudo mkdir /local
+sudo chmod 777 /local
+mkdir /local/theia
+cd /local/theia
+wget https://raw.githubusercontent.com/makemebitter/cloudlab-personal-profiles/master/latest.package.json -O package.json
+curl -o- -L https://yarnpkg.com/install.sh | bash
+source ~/.bashrc
