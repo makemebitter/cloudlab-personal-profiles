@@ -4,7 +4,7 @@ jupyter_contrib_nbextensions
 jupyter_nbextensions_configurator
 yapf
 Pillow==7.1.1
-numpy
+numpy==1.21.6
 pandas
 matplotlib
 seaborn

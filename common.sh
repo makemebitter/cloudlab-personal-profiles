@@ -83,9 +83,9 @@ $DGL_PY -m pip install nvidia-pyindex
 
 
 if ( [[ $GPU_ENABLED -eq 1 ]] ); then
-    $DGL_PY -m pip install dgl-cu113==0.8.2.post1 dglgo -f https://data.dgl.ai/wheels/repo.html
+    $DGL_PY -m pip install dgl-cu113==0.9.1.post1 dglgo -f https://data.dgl.ai/wheels/repo.html
 else
-    $DGL_PY -m pip install dgl==0.8.2.post1 dglgo -f https://data.dgl.ai/wheels/repo.html
+    $DGL_PY -m pip install dgl==0.9.1.post1 dglgo -f https://data.dgl.ai/wheels/repo.html
 fi
 
 
