@@ -39,13 +39,18 @@ echo "c.NotebookApp.password = u'$HASHED_PASSWORD'" >~/.jupyter/jupyter_notebook
 echo "c.NotebookApp.open_browser = False" >>~/.jupyter/jupyter_notebook_config.py;
 
 # Theia
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
-source ~/.bashrc
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-nvm install 12.14.1
-mkdir /local/theia
+# curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
+# source ~/.bashrc
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# nvm install 12.14.1
+# mkdir /local/theia
+
+git clone https://github.com/makemebitter/theia-ide.git /local/theia
+cd /local/theia
+bash install.sh download $DGL_PY
+
 # wget https://raw.githubusercontent.com/theia-ide/theia-apps/a83be54ff44f087c87d8652f05ec73538ea055f7/theia-python-docker/latest.package.json -O /local/theia/package.json
 # wget https://raw.githubusercontent.com/theia-ide/theia-apps/master/theia-python-docker/latest.package.json -O /local/theia/package.json
 
@@ -55,6 +60,17 @@ cd /local/theia
 yarn --cache-folder ./ycache && rm -rf ./ycache && \
  NODE_OPTIONS="--max_old_space_size=4096" yarn theia build ; \
 yarn theia download:plugins
+
+yarn autoclean --init && \
+echo *.ts >> .yarnclean && \
+echo *.ts.map >> .yarnclean && \
+echo *.spec.* >> .yarnclean && \
+yarn autoclean --force && \
+yarn cache clean
+
+npm run build-deb
+
+
 mkdir $HOME/.theia
 cd $BOOTSTRAP_ROOT
 cp settings.json $HOME/.theia/ 

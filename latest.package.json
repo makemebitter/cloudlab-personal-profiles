@@ -1,5 +1,9 @@
 {
     "private": true,
+    "name": "theia-example",
+    "version": "0.0.1",
+    "description": "A custom Theia debian package",
+
     "theia": {
         "frontend": {
             "config": {
@@ -31,7 +35,17 @@
         "@theia/cli": "1.21.0"
     },
     "scripts": {
-        "preinstall": "node-gyp install"
+        "preinstall": "node-gyp install",
+        "prebuild-deb": "npm install -g node-deb",
+        "build-deb": "node-deb -- ."
+    },
+    "node_deb": {
+        "init":"none",
+        "install_strategy":"copy",
+        "executable_name": "theia",
+        "entrypoints": {
+            "cli": "run_theia.sh"
+        }
     },
     "theiaPluginsDir": "plugins",
     "theiaPlugins": {
