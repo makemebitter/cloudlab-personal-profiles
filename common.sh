@@ -18,13 +18,13 @@ sudo -H $SYS_PY -m pip install pip --upgrade
 sudo -H $SYS_PY -m pip install -r requirements_master.txt
 # Jupyter extension configs
 mkdir -p ~/.jupyter;
-sudo $SYS_PY -m jupyter contrib nbextension install --system ;
-sudo $SYS_PY -m jupyter nbextensions_configurator enable --system ;
-sudo $SYS_PY -m jupyter nbextension enable code_prettify/code_prettify --system ;
-sudo $SYS_PY -m jupyter nbextension enable execute_time/ExecuteTime --system ;
-sudo $SYS_PY -m jupyter nbextension enable collapsible_headings/main --system ;
-sudo $SYS_PY -m jupyter nbextension enable freeze/main --system ;
-sudo $SYS_PY -m jupyter nbextension enable spellchecker/main --system ;
+sudo -H $SYS_PY -m jupyter contrib nbextension install --system ;
+sudo -H $SYS_PY -m jupyter nbextensions_configurator enable --system ;
+sudo -H $SYS_PY -m jupyter nbextension enable code_prettify/code_prettify --system ;
+sudo -H $SYS_PY -m jupyter nbextension enable execute_time/ExecuteTime --system ;
+sudo -H $SYS_PY -m jupyter nbextension enable collapsible_headings/main --system ;
+sudo -H $SYS_PY -m jupyter nbextension enable freeze/main --system ;
+sudo -H $SYS_PY -m jupyter nbextension enable spellchecker/main --system ;
 # sudo -H $SYS_PY -m pip install spylon_kernel
 # sudo -H $SYS_PY -m spylon_kernel install
 
