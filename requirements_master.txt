@@ -1,7 +1,8 @@
 pyparsing==2.0.2
+notebook==6.5.3
 jupyter
 jupyter_contrib_nbextensions
-jupyter_nbextensions_configurator
+jupyter_nbextensions_configurator==0.6.1
 yapf
 Pillow==7.1.1
 numpy==1.21.6

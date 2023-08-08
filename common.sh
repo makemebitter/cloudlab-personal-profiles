@@ -18,13 +18,13 @@ sudo -H $SYS_PY -m pip install pip --upgrade
 sudo -H $SYS_PY -m pip install -r requirements_master.txt
 # Jupyter extension configs
 mkdir -p ~/.jupyter;
-sudo -H $SYS_PY -m jupyter contrib nbextension install --system ;
-sudo -H $SYS_PY -m jupyter nbextensions_configurator enable --system ;
-sudo -H $SYS_PY -m jupyter nbextension enable code_prettify/code_prettify --system ;
-sudo -H $SYS_PY -m jupyter nbextension enable execute_time/ExecuteTime --system ;
-sudo -H $SYS_PY -m jupyter nbextension enable collapsible_headings/main --system ;
-sudo -H $SYS_PY -m jupyter nbextension enable freeze/main --system ;
-sudo -H $SYS_PY -m jupyter nbextension enable spellchecker/main --system ;
+sudo $SYS_PY -m jupyter contrib nbextension install --system ;
+sudo $SYS_PY -m jupyter nbextensions_configurator enable --system ;
+sudo $SYS_PY -m jupyter nbextension enable code_prettify/code_prettify --system ;
+sudo $SYS_PY -m jupyter nbextension enable execute_time/ExecuteTime --system ;
+sudo $SYS_PY -m jupyter nbextension enable collapsible_headings/main --system ;
+sudo $SYS_PY -m jupyter nbextension enable freeze/main --system ;
+sudo $SYS_PY -m jupyter nbextension enable spellchecker/main --system ;
 # sudo -H $SYS_PY -m pip install spylon_kernel
 # sudo -H $SYS_PY -m spylon_kernel install
 
@@ -54,28 +54,28 @@ bash install.sh download $DGL_PY
 # wget https://raw.githubusercontent.com/theia-ide/theia-apps/a83be54ff44f087c87d8652f05ec73538ea055f7/theia-python-docker/latest.package.json -O /local/theia/package.json
 # wget https://raw.githubusercontent.com/theia-ide/theia-apps/master/theia-python-docker/latest.package.json -O /local/theia/package.json
 
-cd $BOOTSTRAP_ROOT
-cp latest.package.json /local/theia/package.json
-cd /local/theia
-yarn --cache-folder ./ycache && rm -rf ./ycache && \
- NODE_OPTIONS="--max_old_space_size=4096" yarn theia build ; \
-yarn theia download:plugins
+# cd $BOOTSTRAP_ROOT
+# cp latest.package.json /local/theia/package.json
+# cd /local/theia
+# yarn --cache-folder ./ycache && rm -rf ./ycache && \
+#  NODE_OPTIONS="--max_old_space_size=4096" yarn theia build ; \
+# yarn theia download:plugins
 
-yarn autoclean --init && \
-echo *.ts >> .yarnclean && \
-echo *.ts.map >> .yarnclean && \
-echo *.spec.* >> .yarnclean && \
-yarn autoclean --force && \
-yarn cache clean
+# yarn autoclean --init && \
+# echo *.ts >> .yarnclean && \
+# echo *.ts.map >> .yarnclean && \
+# echo *.spec.* >> .yarnclean && \
+# yarn autoclean --force && \
+# yarn cache clean
 
-npm run build-deb
+# npm run build-deb
 
 
-mkdir $HOME/.theia
-cd $BOOTSTRAP_ROOT
-cp settings.json $HOME/.theia/ 
-sudo mkdir /.metals
-sudo chown $PROJECT_USER /.metals
+# mkdir $HOME/.theia
+# cd $BOOTSTRAP_ROOT
+# cp settings.json $HOME/.theia/ 
+# sudo mkdir /.metals
+# sudo chown $PROJECT_USER /.metals
 
 # DGL setup
 cd /local
